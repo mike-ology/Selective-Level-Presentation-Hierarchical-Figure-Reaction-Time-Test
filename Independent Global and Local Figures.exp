@@ -47,7 +47,7 @@
 <filename>C:\Users\Michael\OneDrive\University\A. Current Projects\New Hierarchical Figures\GLO-LO scenario.sce</filename>
 </efs>
 <exclusive_mouse>1</exclusive_mouse>
-<exp_version>1</exp_version>
+<exp_version>0.1.0</exp_version>
 <exparam>
 <man>
 <cfg>
@@ -61,7 +61,20 @@
 <ss>0</ss>
 </r>
 <ss>
-<sd></sd>
+<sd>
+<val>
+<dat>
+<val></val>
+</dat>
+<id>0</id>
+</val>
+<val>
+<dat>
+<val>NO</val>
+</dat>
+<id>1</id>
+</val>
+</sd>
 <sid>-1</sid>
 </ss>
 </dcfg>
@@ -70,13 +83,47 @@
 <dl>
 <grps>
 <grp>
-<gn></gn>
-<pl></pl>
+<gn>Startup Parameters</gn>
+<pl>
+<pid>0</pid>
+<pid>1</pid>
+</pl>
 </grp>
 </grps>
 </dl>
 <parms>
-<parms></parms>
+<parms>
+<parm>
+<id>0</id>
+<set>
+<desc>Enter Participant ID</desc>
+<edit>1</edit>
+<name>Participant</name>
+<set>
+<rest></rest>
+</set>
+<temp>1</temp>
+<type>string</type>
+<vis>1</vis>
+</set>
+</parm>
+<parm>
+<id>1</id>
+<set>
+<desc>Initially saves logfile data to "C:/Presentation_Output/" during the scenario and then creates an identical logfile in the default logfile location at the end of the scenario.
+
+Useful when running the experiment from a network location (improves stability).</desc>
+<edit>1</edit>
+<name>Use Local Save</name>
+<set>
+<rest>"YES","NO"</rest>
+</set>
+<temp>1</temp>
+<type>string</type>
+<vis>1</vis>
+</set>
+</parm>
+</parms>
 <ssl></ssl>
 </parms>
 <pass></pass>
@@ -119,7 +166,7 @@
 <idt>0</idt>
 <ilc>0</ilc>
 <ip_chans></ip_chans>
-<lfd>C:\Users\Michael\OneDrive\University\A. Current Projects\New Hierarchical Figures</lfd>
+<lfd>C:\Users\Michael\OneDrive\University\A. Current Projects\New Hierarchical Figures\SLP Logfiles</lfd>
 <lnb>2</lnb>
 <lno>4</lno>
 <log>
@@ -147,7 +194,7 @@
 </lslset>
 <maxpv></maxpv>
 <minpv></minpv>
-<nam>Hierarchical Figures</nam>
+<nam>Hierarchical Figures - Selective Level Presentation</nam>
 <one_processor>2</one_processor>
 <oports></oports>
 <out_encrypt_key></out_encrypt_key>

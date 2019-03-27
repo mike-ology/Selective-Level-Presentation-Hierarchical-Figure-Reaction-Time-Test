@@ -3,7 +3,7 @@
 scenario = "GLO/LO 2019";
 active_buttons = 3;
 response_logging = log_active;
-no_logfile = false; # default logfile not created
+no_logfile = true; # default logfile not created
 response_matching = legacy_matching;
 default_background_color = 0, 0, 0;
 default_font = "Arial";
@@ -137,6 +137,45 @@ picture {
 
 begin_pcl;
 
+###   Create logfile and headers
+
+string participant = parameter_manager.get_string( "Participant", "999" );
+string local_save = parameter_manager.get_string( "Use Local Save", "NO" );
+ 
+string local_path = "C:/Presentation Output/";
+string filename = "Participant " +  participant + " - SLP.txt";
+
+output_file log = new output_file;
+
+if local_save == "YES" then
+	create_directory( local_path );
+	log.open_append( local_path + filename ); 
+else
+	log.open_append( filename ); 
+end;
+
+# Logfile Header	
+log.print("SLP Hierarchical Figure Task\n");
+log.print("Participant ");
+log.print( participant );
+log.print("\n");
+log.print( date_time() );
+log.print("\n");
+log.print( "Exposure time: " + "PLACEHOLDER" );
+log.print("\n\n");
+
+# Logfile Table
+log.print("Block\t");
+log.print("Trial\t");
+log.print("Type\t" ); 
+log.print("Level\t"); 
+log.print("Chara.\t");
+log.print("Resp.\t" );
+log.print("RT\t" );
+log.print("Crct." );
+log.print("\n");#new line
+
+# spacing of local elements
 int x_scale = 70;
 int y_scale = 90;
 
@@ -191,96 +230,134 @@ loop int i = 1 until i > 5 begin
 	i = i + 1;
 end;
 
-stimulus_set.shuffle();
-
 instruct_trial.present();
 
-### GENERATE AND PRESENT TRIALS
-
 loop
-	int i = 1
+	int block = 1
 until
-	i > stimulus_set.count()
+	block > 1
 begin
 
-	trial_pic.clear();
-	
-	if stimulus_set[i][2] == 1 then
-		### CREATE LOCAL TRIAL
-		array <int> l [15] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
-		l.shuffle();
-		int j = 1;
+	### GENERATE AND PRESENT TRIALS
 
-		loop
-		until 
-			j > 10
-		begin
-			trial_pic.add_part( local_letters[stimulus_set[i][3]], figure_coords[l[j]][1] * x_scale, figure_coords[l[j]][2] * y_scale );
-			j = j + 1;
-		end;
+	stimulus_set.shuffle();
 
-		loop
-		until 
-			j > 15
-		begin
-			trial_pic.add_part( local_8, figure_coords[l[j]][1] * x_scale, figure_coords[l[j]][2] * y_scale );
-			j = j + 1;
+	loop
+		int i = 1
+	until
+		i > stimulus_set.count()
+	begin
+
+		trial_pic.clear();
+		
+		if stimulus_set[i][2] == 1 then
+			### CREATE LOCAL TRIAL
+			array <int> l [15] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
+			l.shuffle();
+			int j = 1;
+
+			loop
+			until 
+				j > 10
+			begin
+				trial_pic.add_part( local_letters[stimulus_set[i][3]], figure_coords[l[j]][1] * x_scale, figure_coords[l[j]][2] * y_scale );
+				j = j + 1;
+			end;
+
+			loop
+			until 
+				j > 15
+			begin
+				trial_pic.add_part( local_8, figure_coords[l[j]][1] * x_scale, figure_coords[l[j]][2] * y_scale );
+				j = j + 1;
+			end;
+			
+		elseif stimulus_set[i][2] == 2 then
+			### CREATE GLOBAL TRIAL
+			loop
+				int j = 1
+			until
+				j > 11
+			begin
+				trial_pic.add_part( local_8, figure_coords[local_pos[stimulus_set[i][3]][j]][1] * x_scale, figure_coords[local_pos[stimulus_set[i][3]][j]][2] * y_scale );
+				j = j + 1;
+			end;
+
 		end;
 		
-	elseif stimulus_set[i][2] == 2 then
-		### CREATE GLOBAL TRIAL
-		loop
-			int j = 1
-		until
-			j > 11
-		begin
-			trial_pic.add_part( local_8, figure_coords[local_pos[stimulus_set[i][3]][j]][1] * x_scale, figure_coords[local_pos[stimulus_set[i][3]][j]][2] * y_scale );
-			j = j + 1;
+		main_trial.present();
+		
+		stimulus_data last_stimulus = stimulus_manager.last_stimulus_data();
+		response_data last_response = response_manager.last_response_data();
+		
+		int response_time = 0;
+		int response_key = 0;
+		int is_correct = 99;
+
+		if response_manager.response_count() > 0 then
+			response_time = last_stimulus.reaction_time();
+			response_key = last_response.button();
+		else
+			response_time = 0;
+		end;
+		
+		if response_key == stimulus_set[i][3] then
+			feedback_text.set_caption( "CORRECT", true );
+			is_correct = 1;
+			feedback_pic.present();
+			wait_interval( 500 );
+		elseif response_key == 0 && ( stimulus_set[i][3] == 1 || stimulus_set[i][3] == 2 ) then
+			feedback_text.set_caption( "MISS!", true );
+			is_correct = 0;
+			feedback_pic.present();
+			wait_interval( 500 );
+		elseif ( response_key == 1 && stimulus_set[i][3] != 1 ) || ( response_key == 2 && stimulus_set[i][3] != 2 )  then
+			feedback_text.set_caption( "WRONG!", true );
+			is_correct = 0;
+			feedback_pic.present();
+			wait_interval( 500 );
+		else
+			is_correct = 1;
 		end;
 
-	end;
-	
-#	if stimulus_set[i][3] == 1 then
-#		#term.print_line( "TARGET E" );
-#		response_event.set_target_button( 1 );
-#	elseif stimulus_set[i][3] == 2 then
-#		#term.print_line( "TARGET P" );
-#		response_event.set_target_button( 2 );
-#	else
-#		#term.print_line( "DISTRACTOR" );
-#		response_event.set_target_button( 0 );
-#	end;
+		array <string> type[2] = {"TARGET", "DSTRCT"};
+		array <string> level[2] = {"GLOBAL", "LOCAL"};
+		array <string> chara[5] = {"E", "P", "H", "U", "S"};
 
-	main_trial.present();
-	
-	stimulus_data last_stimulus = stimulus_manager.last_stimulus_data();
-	response_data last_response = response_manager.last_response_data();
-	
-	int response_time = 0;
-	int response_key = 0;
+		# Logfile Output
+		log.print( block ); log.print("\t");
+		log.print( i ); log.print("\t");
+		log.print( type[stimulus_set[i][1]] ); log.print("\t");
+		log.print( level[stimulus_set[i][2]] ); log.print("\t");
+		log.print( chara[stimulus_set[i][3]] ); log.print("\t");
+		log.print( response_key ); log.print("\t");
+		log.print( response_time ); log.print("\t");
+		log.print( is_correct ); log.print("\n");
+		
+		i = i + 1;
+	end;
 
-	if response_manager.response_count() > 0 then
-		response_time = last_stimulus.reaction_time();
-		response_key = last_response.button();
-	else
-		response_time = 0;
-	end;
-	
-	term.print_line( string( response_key ) + " , " + string( response_time ) );
-	
-	if response_key == stimulus_set[i][3] then
-		feedback_text.set_caption( "CORRECT", true );
-		feedback_pic.present();
-		wait_interval( 500 );
-	elseif response_key == 0 && ( stimulus_set[i][3] == 1 || stimulus_set[i][3] == 2 ) then
-		feedback_text.set_caption( "MISS!", true );
-		feedback_pic.present();
-		wait_interval( 500 );
-	elseif ( response_key == 1 && stimulus_set[i][3] != 1 ) || ( response_key == 2 && stimulus_set[i][3] != 2 )  then
-		feedback_text.set_caption( "WRONG!", true );
-		feedback_pic.present();
-		wait_interval( 500 );
-	end;
-	
-	i = i + 1;
+	block = block + 1;
 end;
+
+###################################################################################
+if local_save == "YES" then
+
+	log.close();
+
+	input_file local_input = new input_file();
+	local_input.open( local_path + filename );
+
+	output_file final_output = new output_file();
+	final_output.open_append( filename );
+
+	loop
+	until
+		local_input.end_of_file() == true
+	begin
+		final_output.print( local_input.get_line() );
+	end;
+	
+else
+end;
+###################################################################################
