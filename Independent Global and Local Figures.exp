@@ -74,6 +74,18 @@
 </dat>
 <id>1</id>
 </val>
+<val>
+<dat>
+<val>5</val>
+</dat>
+<id>2</id>
+</val>
+<val>
+<dat>
+<val>10</val>
+</dat>
+<id>3</id>
+</val>
 </sd>
 <sid>-1</sid>
 </ss>
@@ -87,6 +99,13 @@
 <pl>
 <pid>0</pid>
 <pid>1</pid>
+</pl>
+</grp>
+<grp>
+<gn>Block Parameters</gn>
+<pl>
+<pid>2</pid>
+<pid>3</pid>
 </pl>
 </grp>
 </grps>
@@ -120,6 +139,36 @@ Useful when running the experiment from a network location (improves stability).
 </set>
 <temp>1</temp>
 <type>string</type>
+<vis>1</vis>
+</set>
+</parm>
+<parm>
+<id>2</id>
+<set>
+<desc>Number of target-type trials delivered per block multiplied by 4.
+(i.e. 2 characters x 2 levels)</desc>
+<edit>0</edit>
+<name>Target Trials</name>
+<set>
+<rest></rest>
+</set>
+<temp>0</temp>
+<type>int</type>
+<vis>1</vis>
+</set>
+</parm>
+<parm>
+<id>3</id>
+<set>
+<desc>Number of distractor-type trials delivered per block multiplied by 6.
+(i.e. 3 charactes x 2 levels)</desc>
+<edit>0</edit>
+<name>Distractor Trials</name>
+<set>
+<rest></rest>
+</set>
+<temp>0</temp>
+<type>int</type>
 <vis>1</vis>
 </set>
 </parm>
@@ -250,48 +299,6 @@ Useful when running the experiment from a network location (improves stability).
 <name>Keyboard</name>
 </device>
 <device>
-<abs_axis>
-<dead_zone>0</dead_zone>
-<max>1000</max>
-<min>-1000</min>
-<name>X-axis</name>
-<saturation>1</saturation>
-</abs_axis>
-<abs_axis>
-<dead_zone>0</dead_zone>
-<max>1000</max>
-<min>-1000</min>
-<name>Y-axis</name>
-<saturation>1</saturation>
-</abs_axis>
-<axis>
-<max>1000</max>
-<min>-1000</min>
-<name>X-axis</name>
-<restricted>1</restricted>
-<scale>1</scale>
-</axis>
-<axis>
-<max>1000</max>
-<min>-1000</min>
-<name>Y-axis</name>
-<restricted>1</restricted>
-<scale>1</scale>
-</axis>
-<axis>
-<max>1000</max>
-<min>-1000</min>
-<name>Wheel</name>
-<restricted>1</restricted>
-<scale>1</scale>
-</axis>
-<device_type>2</device_type>
-<dx_device_type>0</dx_device_type>
-<max_raw_pos>65535</max_raw_pos>
-<min_raw_pos>0</min_raw_pos>
-<name>HID-compliant mouse</name>
-</device>
-<device>
 <device_type>3</device_type>
 <dx_device_type>0</dx_device_type>
 <name>HID Keyboard Device</name>
@@ -342,6 +349,48 @@ Useful when running the experiment from a network location (improves stability).
 <max_raw_pos>65535</max_raw_pos>
 <min_raw_pos>0</min_raw_pos>
 <name>Synaptics HID ClickPad</name>
+</device>
+<device>
+<abs_axis>
+<dead_zone>0</dead_zone>
+<max>1000</max>
+<min>-1000</min>
+<name>X-axis</name>
+<saturation>1</saturation>
+</abs_axis>
+<abs_axis>
+<dead_zone>0</dead_zone>
+<max>1000</max>
+<min>-1000</min>
+<name>Y-axis</name>
+<saturation>1</saturation>
+</abs_axis>
+<axis>
+<max>1000</max>
+<min>-1000</min>
+<name>X-axis</name>
+<restricted>1</restricted>
+<scale>1</scale>
+</axis>
+<axis>
+<max>1000</max>
+<min>-1000</min>
+<name>Y-axis</name>
+<restricted>1</restricted>
+<scale>1</scale>
+</axis>
+<axis>
+<max>1000</max>
+<min>-1000</min>
+<name>Wheel</name>
+<restricted>1</restricted>
+<scale>1</scale>
+</axis>
+<device_type>2</device_type>
+<dx_device_type>0</dx_device_type>
+<max_raw_pos>65535</max_raw_pos>
+<min_raw_pos>0</min_raw_pos>
+<name>HID-compliant mouse</name>
 </device>
 <device>
 <abs_axis>

@@ -218,14 +218,14 @@ array <int> stimulus_set [0][3];
 ### CHANGE THE LENGTH OF THESE LOOPS TO INFLUENCE THE MAKE-UP OF EACH BLOCK ###
 
 # Each loop will add four target trials
-loop int i = 1 until i > 5 begin
+loop int i = 1 until i > parameter_manager.get_int( "Target Trials", 1 ) begin
 	stimulus_set.append( global_targets );
 	stimulus_set.append( local_targets );
 	i = i + 1;
 end;
 
 # Each loop will add six distractor trials
-loop int i = 1 until i > 5 begin
+loop int i = 1 until i > parameter_manager.get_int( "Distractor Trials", 2 ) begin
 	stimulus_set.append( global_distractors );
 	stimulus_set.append( local_distractors );
 	i = i + 1;
