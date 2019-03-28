@@ -33,8 +33,9 @@ trial {
 	};
 }instruct_trial;
 
-$xs = 30; # local character scaling
-$ys = 20; # local character scaling
+$xs = 13; # local character scaling
+$ys = 11; # local character scaling
+$lw = 2;  # line width
 
 line_graphic {
 	#coordinates = x1, y1, x2, y2
@@ -43,7 +44,7 @@ line_graphic {
 	coordinates = '-1 * $xs', '-2 * $ys', '1 * $xs', '-2 * $ys';
 	coordinates = '-1 * $xs', '2 * $ys', '-1 * $xs', '-2 * $ys';
 	coordinates = '1 * $xs', '2 * $ys', '1 * $xs', '-2 * $ys';
-	line_width = 2;
+	line_width = $lw;
 	line_color = 128, 128, 128;
 }local_8;
 
@@ -54,7 +55,7 @@ array {
 		coordinates = '-1 * $xs', '0 * $ys', '1 * $xs', '0 * $ys';
 		coordinates = '-1 * $xs', '-2 * $ys', '1 * $xs', '-2 * $ys';
 		coordinates = '-1 * $xs', '2 * $ys', '-1 * $xs', '-2 * $ys';
-		line_width = 2;
+		line_width = $lw;
 		line_color = 128, 128, 128;
 	}local_E;
 
@@ -64,7 +65,7 @@ array {
 		coordinates = '-1 * $xs', '0 * $ys', '1 * $xs', '0 * $ys';
 		coordinates = '-1 * $xs', '2 * $ys', '-1 * $xs', '-2 * $ys';
 		coordinates = '1 * $xs', '2 * $ys', '1 * $xs', '0 * $ys';
-		line_width = 2;
+		line_width = $lw;
 		line_color = 128, 128, 128;
 	}local_P;
 
@@ -73,7 +74,7 @@ array {
 		coordinates = '-1 * $xs', '0 * $ys', '1 * $xs', '0 * $ys';
 		coordinates = '-1 * $xs', '2 * $ys', '-1 * $xs', '-2 * $ys';
 		coordinates = '1 * $xs', '2 * $ys', '1 * $xs', '-2 * $ys';
-		line_width = 2;
+		line_width = $lw;
 		line_color = 128, 128, 128;
 	}local_H;
 
@@ -82,7 +83,7 @@ array {
 		coordinates = '-1 * $xs', '-2 * $ys', '1 * $xs', '-2 * $ys';
 		coordinates = '-1 * $xs', '2 * $ys', '-1 * $xs', '-2 * $ys';
 		coordinates = '1 * $xs', '2 * $ys', '1 * $xs', '-2 * $ys';
-		line_width = 2;
+		line_width = $lw;
 		line_color = 128, 128, 128;
 	}local_U;
 
@@ -93,7 +94,7 @@ array {
 		coordinates = '-1 * $xs', '-2 * $ys', '1 * $xs', '-2 * $ys';
 		coordinates = '-1 * $xs', '2 * $ys', '-1 * $xs', '0 * $ys';
 		coordinates = '1 * $xs', '0 * $ys', '1 * $xs', '-2 * $ys';
-		line_width = 2;
+		line_width = $lw;
 		line_color = 128, 128, 128;
 	}local_S;
 }local_letters;
@@ -173,11 +174,11 @@ log.print("Chara.\t");
 log.print("Resp.\t" );
 log.print("RT\t" );
 log.print("Crct." );
-log.print("\n");#new line
+log.print("\n");
 
 # spacing of local elements
-int x_scale = 70;
-int y_scale = 90;
+int x_scale = 32;
+int y_scale = 50;
 
 # coordinates for 3x5 array
 array <int> figure_coords [15][2] = { 
@@ -355,7 +356,7 @@ if local_save == "YES" then
 	until
 		local_input.end_of_file() == true
 	begin
-		final_output.print( local_input.get_line() );
+		final_output.print_line( local_input.get_line() );
 	end;
 	
 else
