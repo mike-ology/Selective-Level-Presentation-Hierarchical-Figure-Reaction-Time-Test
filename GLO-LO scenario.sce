@@ -129,6 +129,22 @@ trial {
 
 }main_trial;
 
+trial {
+	trial_type = specific_response;
+	terminator_button = 3;
+	trial_duration = forever;
+	picture {
+		text {
+			caption = "Block finished!";
+		}block_message;	
+		x = 0; y = 0;
+		text {
+			caption = "Press [SPACEBAR] to continue.";
+		}block_prompt;
+		x = 0; y = -100;
+	};
+}end_block_trial;
+
 picture { 
 	text { 
 		caption = "FEEDBACK"; 
@@ -233,10 +249,12 @@ end;
 
 instruct_trial.present();
 
+int max_blocks = parameter_manager.get_int( "Maximum Blocks", 1 );
+
 loop
 	int block = 1
 until
-	block > 1
+	block > max_blocks
 begin
 
 	### GENERATE AND PRESENT TRIALS
@@ -338,8 +356,23 @@ begin
 		i = i + 1;
 	end;
 
+	if block != max_blocks then
+		# not the last block
+		end_block_trial.present()
+	else
+		# skip "End of Block" message
+	end;
+
 	block = block + 1;
 end;
+
+double time = ( double ( clock.time()) )/60000.00;
+log.print ( "\nTime to completion... " );
+log.print ( string( time ) + " minutes" ); 
+
+log.print( "\n" );
+log.print( "\n" );
+log.print( "===== TASK COMPLETE =====" );
 
 ###################################################################################
 if local_save == "YES" then
@@ -362,3 +395,7 @@ if local_save == "YES" then
 else
 end;
 ###################################################################################
+
+block_message.set_caption( "Thank you! That is the end\nof the experiment!", true );
+block_prompt.set_caption( "Press [SPACEBAR] to close the program", true );
+end_block_trial.present();
