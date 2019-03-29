@@ -158,7 +158,6 @@ begin_pcl;
 
 string participant = parameter_manager.get_string( "Participant", "999" );
 string local_save = parameter_manager.get_string( "Use Local Save", "NO" );
- 
 string local_path = "C:/Presentation Output/";
 string filename = "Participant " +  participant + " - SLP.txt";
 
@@ -366,35 +365,26 @@ begin
 	block = block + 1;
 end;
 
-double time = ( double ( clock.time()) )/60000.00;
+double time = round ( ( double ( clock.time()) )/60000.00, 2 );
 log.print ( "\nTime to completion... " );
 log.print ( string( time ) + " minutes" ); 
 
 log.print( "\n" );
 log.print( "\n" );
 log.print( "===== TASK COMPLETE =====" );
+log.close();
 
-###################################################################################
-if local_save == "YES" then
+#########################################################
+# Subroutine to copy logfile back to the default location
+# Requires the strings associated with:
+#	[1] the local file path
+#	[2] the file name to be entered as arguments
+#	[3] if save operation is to be performed ("YES"/"NO") 
 
-	log.close();
+include "save_to_network_snippet.pcl";
+sub_save_to_network( local_path, filename, local_save );	
 
-	input_file local_input = new input_file();
-	local_input.open( local_path + filename );
-
-	output_file final_output = new output_file();
-	final_output.open_append( filename );
-
-	loop
-	until
-		local_input.end_of_file() == true
-	begin
-		final_output.print_line( local_input.get_line() );
-	end;
-	
-else
-end;
-###################################################################################
+#########################################################
 
 block_message.set_caption( "Thank you! That is the end\nof the experiment!", true );
 block_prompt.set_caption( "Press [SPACEBAR] to close the program", true );

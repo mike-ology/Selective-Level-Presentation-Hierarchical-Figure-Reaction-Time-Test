@@ -1,0 +1,60 @@
+### LOCAL FILE >> NETWORK FILE ###
+
+sub
+	sub_save_to_network( string path, string name, string save )
+begin
+
+	if save == "YES" then
+
+		# Create message graphic and present
+		
+		line_graphic message_box = new line_graphic();
+		message_box.set_next_line_color( 0, 255, 0, 255 );
+		message_box.set_line_width( 5.0 );
+		message_box.set_next_join_type( join_circle );
+		message_box.add_line( -300, 100, 300, 100 );
+		message_box.line_to( 300, -100 );
+		message_box.line_to( -300, -100 );
+		message_box.close( false );
+		message_box.redraw();
+
+		text saving_text = new text();
+		saving_text.set_font_color( 0, 255, 0 );
+		saving_text.set_caption( "Saving logfile...", true );
+
+		picture saving_pic = new picture();
+		saving_pic.add_part( message_box, 0, 0 );
+		saving_pic.add_part( saving_text, 0, 0 );
+
+		saving_pic.present();
+		wait_interval( 2000 );
+
+		# Copy local version of logfile to network location
+
+		input_file local_input = new input_file();
+		local_input.open( path + name );
+
+		output_file final_output = new output_file();
+		final_output.open_append( name );
+
+		loop
+		until
+			local_input.end_of_file() == true
+		begin
+			final_output.print_line( local_input.get_line() );
+		end;
+
+		# Update message and present
+
+		saving_text.set_caption( "Logfile saved!", true );
+
+		saving_pic.present();
+		wait_interval( 2000 );
+
+	else
+		
+		# do not perform network save operation
+		
+	end;
+
+end;
