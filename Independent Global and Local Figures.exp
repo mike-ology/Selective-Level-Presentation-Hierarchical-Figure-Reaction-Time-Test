@@ -137,12 +137,18 @@
 </dat>
 <id>4</id>
 </val>
+<val>
+<dat>
+<val>1000</val>
+</dat>
+<id>5</id>
+</val>
 </sd>
 <sid>-1</sid>
 </ss>
 </dcfg>
 </cfg>
-<cs>0</cs>
+<cs>-1</cs>
 <dl>
 <grps>
 <grp>
@@ -153,8 +159,9 @@
 </pl>
 </grp>
 <grp>
-<gn>Block Parameters</gn>
+<gn>Trial and Block Parameters</gn>
 <pl>
+<pid>5</pid>
 <pid>4</pid>
 <pid>2</pid>
 <pid>3</pid>
@@ -230,6 +237,20 @@ Useful when running the experiment from a network location (improves stability).
 <desc>Number of blocks of trials to present. Breaks occur between blocks.</desc>
 <edit>1</edit>
 <name>Maximum Blocks</name>
+<set>
+<rest></rest>
+</set>
+<temp>0</temp>
+<type>int</type>
+<vis>1</vis>
+</set>
+</parm>
+<parm>
+<id>5</id>
+<set>
+<desc>Set the duration (in milliseconds) that the figure will appear for before ending the trial</desc>
+<edit>1</edit>
+<name>Trial Duration</name>
 <set>
 <rest></rest>
 </set>

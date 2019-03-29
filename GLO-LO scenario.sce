@@ -13,6 +13,8 @@ default_formatted_text = true;
 
 begin;
 
+$exposure_duration = EXPARAM( "Trial Duration" : 1000 ); 
+
 trial {
 	trial_type = specific_response;
 	terminator_button = 3;
@@ -100,7 +102,7 @@ array {
 }local_letters;
 
 trial {
-	trial_duration = 2000;
+	trial_duration = '$exposure_duration + 1000';
 	trial_type = specific_response;
 	terminator_button = 1, 2;
 	all_responses = false;
@@ -154,7 +156,7 @@ picture {
 
 begin_pcl;
 
-###   Create logfile and headers
+###   Define logfile parameters and initialize
 
 string participant = parameter_manager.get_string( "Participant", "999" );
 string local_save = parameter_manager.get_string( "Use Local Save", "NO" );
