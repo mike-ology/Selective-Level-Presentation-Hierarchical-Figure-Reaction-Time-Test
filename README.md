@@ -1,4 +1,4 @@
-# Independent-Components Hierarchical Figure Reaction Time Test
+# Selective Level Presentation Hierarchical Figure Reaction Time Test
 
 This program and the associated files were developed using, and are intended for use, with NBS Presentation (v20.3).
 
