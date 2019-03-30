@@ -22,15 +22,15 @@ trial {
 	picture {
 		text {
 			caption = "Press [Z] if the letter E is present.\nPress [/] if the letter P is present.\nPress nothing is neither are present.";
-		};	
+		}instruct_text_1;	
 		x = 0; y = 100;
 		text {
 			caption = "The letters may appear at the global (large) or local (small) level.";
-		};
+		}instruct_text_2;
 		x = 0; y = 0;
 		text {
 			caption = "Press [SPACEBAR] to begin.";
-		};
+		}instruct_text_3;
 		x = 0; y = -100;
 	};
 }instruct_trial;
@@ -156,6 +156,14 @@ picture {
 
 begin_pcl;
 
+### Change instructions for mobiles / touchscreens
+if parameter_manager.configuration_name() == "Mobile / Touchscreen" then
+	instruct_text_1.set_caption( "Touch the left-half of the screen if the letter E is present.\nTouch the right-half of the screen if the letter P is present.\nTouch nothing is neither are present.", true );
+	instruct_text_3.set_caption( "Touch the bottom-half of the screen to continue.", true );
+	block_prompt.set_caption( "Touch the bottom-half of the screen to continue.", true );
+else
+end;
+
 ###   Define logfile parameters and initialize
 
 string participant;
@@ -185,7 +193,7 @@ log.print( participant );
 log.print("\n");
 log.print( date_time() );
 log.print("\n");
-log.print( "Exposure time: " + "PLACEHOLDER" );
+log.print( "Exposure time: " + string( 1000 + parameter_manager.get_int( "Trial Duration" ) ) );
 log.print("\n\n");
 
 # Logfile Table
@@ -396,4 +404,11 @@ sub_save_to_network( local_path, filename, local_save );
 
 block_message.set_caption( "Thank you! That is the end\nof the experiment!", true );
 block_prompt.set_caption( "Press [SPACEBAR] to close the program", true );
+
+### Change instructions for mobiles / touchscreens
+if parameter_manager.configuration_name() == "Mobile / Touchscreen" then
+	block_prompt.set_caption( "Touch the bottom-half of the screen to finish.", true );
+else
+end;
+
 end_block_trial.present();
