@@ -158,7 +158,13 @@ begin_pcl;
 
 ###   Define logfile parameters and initialize
 
-string participant = parameter_manager.get_string( "Participant", "999" );
+string participant;
+if logfile.subject() == "" then
+	participant = "NULL 999"
+else
+	participant = logfile.subject();
+end;
+
 string local_save = parameter_manager.get_string( "Use Local Save", "NO" );
 string local_path = "C:/Presentation Output/";
 string filename = "Participant " +  participant + " - SLP.txt";
