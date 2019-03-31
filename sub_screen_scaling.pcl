@@ -1,0 +1,169 @@
+##############################################################################
+
+### Get stimulus scaling factor for different screens
+
+sub
+	double screen_check
+begin
+	
+	if display_device.height() == 1080 && display_device.width() == 1920
+		then
+			scale_factor = 1.0;
+			return scale_factor;
+			# END SUB
+	else
+		# Continue subroutine if screen does not match expected dimensions
+	end;
+	
+	#scale_factor = starting_scale_factor;
+	double line_thickness = 50.0;
+	int line_length = 200;
+
+	### Create graphics used for mobiles / touchscreens
+	line_graphic smaller_button = new line_graphic;
+	line_graphic larger_button = new line_graphic;
+	text smaller_text = new text;
+	text larger_text = new text;
+
+	smaller_text.set_font_color( 0, 0, 0 );
+	smaller_text.set_background_color( 255, 0, 128 );
+	smaller_text.set_font_size( 48.0 );
+	smaller_text.set_caption( "Tap here to\nmake the frame\nsmaller", true );
+
+	larger_text.set_font_color( 0, 0, 0 );
+	larger_text.set_background_color( 128, 0, 255 );
+	larger_text.set_font_size( 48.0 );
+	larger_text.set_caption( "Tap here to\nmake the frame\nlarger", true );
+
+	smaller_button.set_fill_color( 255, 0, 128, 255 );
+	smaller_button.add_line( (-1920 / 4) * scale_factor, (1080 / 2) * scale_factor, (1920 / 4) * scale_factor, (1080 / 2) * scale_factor );
+	smaller_button.line_to( (1920 / 4) * scale_factor, (-1080 / 2) * scale_factor );
+	smaller_button.line_to( (-1920 / 4) * scale_factor, (-1080 / 2) * scale_factor );
+	smaller_button.close( true );
+	smaller_button.redraw();
+
+	larger_button.set_fill_color( 128, 0, 255, 255 );
+	larger_button.add_line( (-1920 / 4) * scale_factor, (1080 / 2) * scale_factor, (1920 / 4) * scale_factor, (1080 / 2) * scale_factor );
+	larger_button.line_to( (1920 / 4) * scale_factor, (-1080 / 2) * scale_factor );
+	larger_button.line_to( (-1920 / 4) * scale_factor, (-1080 / 2) * scale_factor );
+	larger_button.close( true );
+	larger_button.redraw();
+
+	line_graphic screen_check_frame = new line_graphic;
+
+	screen_check_frame.set_line_color( 255, 255, 0, 255 );
+	screen_check_frame.set_line_width( line_thickness );
+	
+	screen_check_frame.add_line( (((-1920 / 2) * scale_factor) + (line_thickness / 2)), (((1080 / 2) * scale_factor) - (line_thickness / 2)), (((1920 / 2) * scale_factor) - (line_thickness / 2)), (((1080 / 2) * scale_factor) - (line_thickness / 2)) ); 
+	screen_check_frame.line_to( (((1920 / 2) * scale_factor) - (line_thickness / 2)), (((-1080 / 2) * scale_factor) + (line_thickness / 2)) );
+	screen_check_frame.line_to( (((-1920 / 2) * scale_factor) + (line_thickness / 2)), (((-1080 / 2) * scale_factor) + (line_thickness / 2)) );
+	screen_check_frame.close( false );
+	screen_check_frame.redraw();
+	
+	text screen_check_text_0 = new text;
+	text screen_check_text_1 = new text;
+	text screen_check_text_2 = new text;
+	text screen_check_text_3 = new text;
+	screen_check_text_0.set_caption( "This experiment was designed for screens running at 1920 x 1080.\n\nIf the yellow frame does not reach the edge of the screen (or you cannot see it),\nplease exit the experiment and adjust the screen settings.\n\nAlternatively, press SPACEBAR to adjust the display now.", true );
+	screen_check_text_1.set_caption( "Press " + response_manager.button_name( 1, false, true ) + " to make the frame smaller.", true );
+	screen_check_text_2.set_caption( "Press " + response_manager.button_name( 2, false, true ) + " to make the frame larger.", true );
+	screen_check_text_3.set_caption( "Press " + response_manager.button_name( 3, false, true ) + " when the frame just fits inside the screen.", true );
+	
+	picture screen_check_pic = new picture;
+
+	# Actually construct instructions based on screen type
+	if parameter_manager.configuration_name() == "Mobile / Touchscreen" then
+		screen_check_text_0.set_caption( "This experiment was designed for screens running at 1920 x 1080.\n\nIf the yellow frame does not reach the edge of the screen (or you cannot see it),\nplease exit the experiment and adjust the screen settings.\n\nAlternatively, tap CONTINUE to adjust the display now.", true );
+		screen_check_pic.add_part( screen_check_text_0, 0, 0 );
+		screen_check_pic.add_part( continue_button, 0, -0.75 * (1080 / 2) * starting_scale_factor );
+		screen_check_pic.add_part( screen_check_frame, 0, 0 );
+		screen_check_pic.add_part( continue_text, 0, -0.75 * (1080 / 2) * starting_scale_factor );
+	else
+		screen_check_pic.add_part( screen_check_text_0, 0, 0 );
+		screen_check_pic.add_part( screen_check_frame, 0, 0 );
+	end;
+
+	trial screen_check_trial = new trial;
+	screen_check_trial.add_stimulus_event( screen_check_pic );
+
+	screen_check_trial.get_stimulus_event( 1 ).set_response_active( true );
+	
+	screen_check_trial.set_duration( forever );
+	screen_check_trial.set_type( specific_response );
+	screen_check_trial.set_terminator_button( 3 );
+
+	screen_check_trial.present();
+
+	# Present loop for adjusting scale factor, altered according to screen type
+	loop
+		int response_key
+	until
+		response_key == 3
+	begin
+		screen_check_pic.clear();
+
+		screen_check_frame.clear();
+		screen_check_frame.add_line( (((-1920 / 2) * scale_factor) + (line_thickness / 2)), (((1080 / 2) * scale_factor) - (line_thickness / 2)), (((1920 / 2) * scale_factor) - (line_thickness / 2)), (((1080 / 2) * scale_factor) - (line_thickness / 2)) ); 
+		screen_check_frame.line_to( (((1920 / 2) * scale_factor) - (line_thickness / 2)), (((-1080 / 2) * scale_factor) + (line_thickness / 2)) );
+		screen_check_frame.line_to( (((-1920 / 2) * scale_factor) + (line_thickness / 2)), (((-1080 / 2) * scale_factor) + (line_thickness / 2)) );
+		screen_check_frame.close( false );
+		screen_check_frame.redraw();
+
+		smaller_button.clear();
+		smaller_button.add_line( (-1920 / 4) * scale_factor, (1080 / 2) * scale_factor, (1920 / 4) * scale_factor, (1080 / 2) * scale_factor );
+		smaller_button.line_to( (1920 / 4) * scale_factor, (-1080 / 2) * scale_factor );
+		smaller_button.line_to( (-1920 / 4) * scale_factor, (-1080 / 2) * scale_factor );
+		smaller_button.close( true );
+		smaller_button.redraw();
+
+		larger_button.clear();
+		larger_button.add_line( (-1920 / 4) * scale_factor, (1080 / 2) * scale_factor, (1920 / 4) * scale_factor, (1080 / 2) * scale_factor );
+		larger_button.line_to( (1920 / 4) * scale_factor, (-1080 / 2) * scale_factor );
+		larger_button.line_to( (-1920 / 4) * scale_factor, (-1080 / 2) * scale_factor );
+		larger_button.close( true );
+		larger_button.redraw();
+
+		if parameter_manager.configuration_name() == "Mobile / Touchscreen" then
+			continue_text.set_caption( "Tap here when the yellow frame fits inside the screen", true );
+			
+			screen_check_trial.set_terminator_buttons( { 4, 5, 3 } );
+			screen_check_pic.add_part( smaller_button, (-1920 / 4) * scale_factor, 0 );
+			screen_check_pic.add_part( smaller_text, (-1920 / 4) * scale_factor, 0.25 * (1080 / 2) * scale_factor );
+			screen_check_pic.add_part( larger_button, ( 1920 / 4) * scale_factor, 0 );
+			screen_check_pic.add_part( larger_text, ( 1920 / 4) * scale_factor, 0.25 * (1080 / 2) * scale_factor );
+			screen_check_pic.add_part( continue_button, 0, -0.75 * (1080 / 2) * starting_scale_factor );
+			screen_check_pic.add_part( screen_check_frame, 0, 0 );
+			screen_check_pic.add_part( continue_text, 0, -0.75 * (1080 / 2) * starting_scale_factor );
+		else
+			screen_check_trial.set_terminator_buttons( { 1, 2, 3 } );
+			screen_check_pic.add_part( screen_check_text_1, 0, 50 );
+			screen_check_pic.add_part( screen_check_text_2, 0, -50 );
+			screen_check_pic.add_part( screen_check_text_3, 0, -150 );
+			screen_check_pic.add_part( screen_check_frame, 0, 0 );
+		end;
+		screen_check_frame.redraw();
+
+		screen_check_trial.present();
+		response_key = response_manager.last_response();
+		
+		if response_key == 1 || response_key == 4 then
+			term.print_line( "smaller" );
+			scale_factor = scale_factor - 0.1;
+			if scale_factor < 0.5 then
+				scale_factor = 0.5
+			else
+			end;
+		elseif
+			response_key == 2 || response_key == 5 then
+			term.print_line( "larger" );
+			scale_factor = scale_factor + 0.1;
+			if scale_factor > 2.0 then
+				scale_factor = 2.0
+			else
+			end;			
+		end; #ENDIF
+	end; #ENDLOOP
+	
+	return scale_factor;
+	
+end; #ENDSUB

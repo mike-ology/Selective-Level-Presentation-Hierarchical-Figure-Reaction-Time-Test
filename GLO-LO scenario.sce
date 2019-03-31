@@ -1,7 +1,7 @@
 # HEADER #
 
 scenario = "GLO/LO 2019";
-active_buttons = 3;
+active_buttons = 5;
 response_logging = log_active;
 no_logfile = true; # default logfile not created
 response_matching = legacy_matching;
@@ -32,74 +32,8 @@ trial {
 			caption = "Press [SPACEBAR] to begin.";
 		}instruct_text_3;
 		x = 0; y = -100;
-	};
+	}instruct_pic;
 }instruct_trial;
-
-$xs = 13; # local character scaling
-$ys = 11; # local character scaling
-$lw = 2;  # line width
-
-line_graphic {
-	#coordinates = x1, y1, x2, y2
-	coordinates = '-1 * $xs', '2 * $ys', '1 * $xs', '2 * $ys';
-	coordinates = '-1 * $xs', '0 * $ys', '1 * $xs', '0 * $ys';
-	coordinates = '-1 * $xs', '-2 * $ys', '1 * $xs', '-2 * $ys';
-	coordinates = '-1 * $xs', '2 * $ys', '-1 * $xs', '-2 * $ys';
-	coordinates = '1 * $xs', '2 * $ys', '1 * $xs', '-2 * $ys';
-	line_width = $lw;
-	line_color = 128, 128, 128;
-}local_8;
-
-array {
-	line_graphic {
-		#coordinates = x1, y1, x2, y2
-		coordinates = '-1 * $xs', '2 * $ys', '1 * $xs', '2 * $ys';
-		coordinates = '-1 * $xs', '0 * $ys', '1 * $xs', '0 * $ys';
-		coordinates = '-1 * $xs', '-2 * $ys', '1 * $xs', '-2 * $ys';
-		coordinates = '-1 * $xs', '2 * $ys', '-1 * $xs', '-2 * $ys';
-		line_width = $lw;
-		line_color = 128, 128, 128;
-	}local_E;
-
-	line_graphic {
-		#coordinates = x1, y1, x2, y2
-		coordinates = '-1 * $xs', '2 * $ys', '1 * $xs', '2 * $ys';
-		coordinates = '-1 * $xs', '0 * $ys', '1 * $xs', '0 * $ys';
-		coordinates = '-1 * $xs', '2 * $ys', '-1 * $xs', '-2 * $ys';
-		coordinates = '1 * $xs', '2 * $ys', '1 * $xs', '0 * $ys';
-		line_width = $lw;
-		line_color = 128, 128, 128;
-	}local_P;
-
-	line_graphic {
-		#coordinates = x1, y1, x2, y2
-		coordinates = '-1 * $xs', '0 * $ys', '1 * $xs', '0 * $ys';
-		coordinates = '-1 * $xs', '2 * $ys', '-1 * $xs', '-2 * $ys';
-		coordinates = '1 * $xs', '2 * $ys', '1 * $xs', '-2 * $ys';
-		line_width = $lw;
-		line_color = 128, 128, 128;
-	}local_H;
-
-	line_graphic {
-		#coordinates = x1, y1, x2, y2
-		coordinates = '-1 * $xs', '-2 * $ys', '1 * $xs', '-2 * $ys';
-		coordinates = '-1 * $xs', '2 * $ys', '-1 * $xs', '-2 * $ys';
-		coordinates = '1 * $xs', '2 * $ys', '1 * $xs', '-2 * $ys';
-		line_width = $lw;
-		line_color = 128, 128, 128;
-	}local_U;
-
-	line_graphic {
-		#coordinates = x1, y1, x2, y2
-		coordinates = '-1 * $xs', '2 * $ys', '1 * $xs', '2 * $ys';
-		coordinates = '-1 * $xs', '0 * $ys', '1 * $xs', '0 * $ys';
-		coordinates = '-1 * $xs', '-2 * $ys', '1 * $xs', '-2 * $ys';
-		coordinates = '-1 * $xs', '2 * $ys', '-1 * $xs', '0 * $ys';
-		coordinates = '1 * $xs', '0 * $ys', '1 * $xs', '-2 * $ys';
-		line_width = $lw;
-		line_color = 128, 128, 128;
-	}local_S;
-}local_letters;
 
 trial {
 	trial_duration = '$exposure_duration + 1000';
@@ -156,11 +90,130 @@ picture {
 
 begin_pcl;
 
+#######################
+
+# Initial Setup
+
+double scale_factor = 1.0;
+double x_starting_scale_factor = round( display_device.width() / 1920.0, 1 );
+double y_starting_scale_factor = round( display_device.height() / 1080.0, 1 );
+double starting_scale_factor;
+if x_starting_scale_factor  < y_starting_scale_factor then
+	starting_scale_factor = x_starting_scale_factor
+else
+	starting_scale_factor = y_starting_scale_factor
+end;
+
+#######################
+
+# Create "CONTINUE" prompt for use on touchscreens
+# Note: The scaling on this button can not be changed so as to match response settings! 
+
+text continue_text = new text;
+line_graphic continue_button = new line_graphic;
+
+continue_text.set_font_color( 0, 0, 0 );
+continue_text.set_background_color( 0, 255, 0, 128 );
+continue_text.set_font_size( 48.0 );
+continue_text.set_caption( "CONTINUE", true );
+
+continue_button.set_fill_color( 0, 255, 0, 255 );
+continue_button.add_line( (-1920 / 2) * starting_scale_factor, (1080 / 8) * starting_scale_factor, (1920 / 2) * starting_scale_factor, (1080 / 8) * starting_scale_factor );
+continue_button.line_to( (1920 / 2) * starting_scale_factor, (-1080 / 8) * starting_scale_factor );
+continue_button.line_to( (-1920 / 2) * starting_scale_factor, (-1080 / 8) * starting_scale_factor );
+continue_button.close( true );
+continue_button.redraw();
+
+# Example coordinates for continue prompt to match response settings
+# picture_object.add_part( continue_object, 0, -0.75 * (1080 / 2) * starting_scale_factor );
+
+#######################
+
+# Adjust stimulus dimensions if not using 1920 x 1080 device via subroutine
+
+include "sub_screen_scaling.pcl";
+screen_check();
+
+#######################
+
+# Begin creating stimuli for experiment
+
+double xs = 13.0 * scale_factor;
+double ys = 11.0 * scale_factor;
+double lw = 2.0 * scale_factor;
+
+line_graphic local_E = new line_graphic;
+line_graphic local_P = new line_graphic;
+line_graphic local_H = new line_graphic;
+line_graphic local_U = new line_graphic;
+line_graphic local_S = new line_graphic;
+line_graphic local_8 = new line_graphic;
+
+local_E.set_line_width( lw );
+local_P.set_line_width( lw );
+local_H.set_line_width( lw );
+local_U.set_line_width( lw );
+local_S.set_line_width( lw );
+local_8.set_line_width( lw );
+
+local_E.set_line_color( 128, 128, 128, 255 );
+local_P.set_line_color( 128, 128, 128, 255 );
+local_H.set_line_color( 128, 128, 128, 255 );
+local_U.set_line_color( 128, 128, 128, 255 );
+local_S.set_line_color( 128, 128, 128, 255 );
+local_8.set_line_color( 128, 128, 128, 255 );
+
+local_E.add_line( -1 * xs, 2 * ys, 1 * xs, 2 * ys );
+local_E.add_line( -1 * xs, 0 * ys, 1 * xs, 0 * ys );
+local_E.add_line( -1 * xs, -2 * ys, 1 * xs, -2 * ys );
+local_E.add_line( -1 * xs, 2 * ys, -1 * xs, -2 * ys );
+
+local_P.add_line( -1 * xs, 2 * ys, 1 * xs, 2 * ys );
+local_P.add_line( -1 * xs, 0 * ys, 1 * xs, 0 * ys );
+local_P.add_line( -1 * xs, 2 * ys, -1 * xs, -2 * ys );
+local_P.add_line( 1 * xs, 2 * ys, 1 * xs, 0 * ys );
+
+local_H.add_line( -1 * xs, 0 * ys, 1 * xs, 0 * ys );
+local_H.add_line( -1 * xs, 2 * ys, -1 * xs, -2 * ys );
+local_H.add_line( 1 * xs, 2 * ys, 1 * xs, -2 * ys );
+
+local_U.add_line( -1 * xs, -2 * ys, 1 * xs, -2 * ys );
+local_U.add_line( -1 * xs, 2 * ys, -1 * xs, -2 * ys );
+local_U.add_line( 1 * xs, 2 * ys, 1 * xs, -2 * ys );
+
+local_S.add_line( -1 * xs, 2 * ys, 1 * xs, 2 * ys );
+local_S.add_line( -1 * xs, 0 * ys, 1 * xs, 0 * ys );
+local_S.add_line( -1 * xs, -2 * ys, 1 * xs, -2 * ys );
+local_S.add_line( -1 * xs, 2 * ys, -1 * xs, 0 * ys );
+local_S.add_line( 1 * xs, 0 * ys, 1 * xs, -2 * ys );
+
+local_8.add_line( -1 * xs, 2 * ys, 1 * xs, 2 * ys );
+local_8.add_line( -1 * xs, 0 * ys, 1 * xs, 0 * ys );
+local_8.add_line( -1 * xs, -2 * ys, 1 * xs, -2 * ys );
+local_8.add_line( -1 * xs, 2 * ys, -1 * xs, -2 * ys );
+local_8.add_line( 1 * xs, 2 * ys, 1 * xs, -2 * ys );
+
+local_E.redraw();
+local_P.redraw();
+local_H.redraw();
+local_U.redraw();
+local_S.redraw();
+local_8.redraw();
+
+array <line_graphic> local_letters [0]; 
+local_letters.add( local_E );
+local_letters.add( local_P );
+local_letters.add( local_H );
+local_letters.add( local_U );
+local_letters.add( local_S );
+
 ### Change instructions for mobiles / touchscreens
 if parameter_manager.configuration_name() == "Mobile / Touchscreen" then
+	instruct_pic.remove_part( 3 );
 	instruct_text_1.set_caption( "Touch the left-half of the screen if the letter E is present.\nTouch the right-half of the screen if the letter P is present.\nTouch nothing is neither are present.", true );
-	instruct_text_3.set_caption( "Touch the bottom-half of the screen to continue.", true );
-	block_prompt.set_caption( "Touch the bottom-half of the screen to continue.", true );
+	continue_text.set_caption( "Tap here to begin.", true );
+	instruct_pic.add_part( continue_button, 0, -0.75 * (1080 / 2) * starting_scale_factor );
+	instruct_pic.add_part( continue_text, 0, -0.75 * (1080 / 2) * starting_scale_factor );
 else
 end;
 
@@ -193,6 +246,8 @@ log.print( participant );
 log.print("\n");
 log.print( date_time() );
 log.print("\n");
+log.print( "Scale factor: " + string( scale_factor ) );
+log.print("\n");
 log.print( "Exposure time: " + string( 1000 + parameter_manager.get_int( "Trial Duration" ) ) );
 log.print("\n\n");
 
@@ -208,8 +263,8 @@ log.print("Crct." );
 log.print("\n");
 
 # spacing of local elements
-int x_scale = 32;
-int y_scale = 50;
+double x_scale = 32.0 * scale_factor;
+double y_scale = 50.0 * scale_factor;
 
 # coordinates for 3x5 array
 array <int> figure_coords [15][2] = { 
@@ -397,7 +452,7 @@ log.close();
 #	[2] the file name to be entered as arguments
 #	[3] if save operation is to be performed ("YES"/"NO") 
 
-include "save_to_network_snippet.pcl";
+include "sub_force_local_save.pcl";
 sub_save_to_network( local_path, filename, local_save );	
 
 #########################################################

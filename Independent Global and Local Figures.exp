@@ -45,7 +45,8 @@
 <dxv>8</dxv>
 <efs>
 <filename>D:\Personal\OneDrive\University\A. Current Projects\New Hierarchical Figures\GLO-LO scenario.sce</filename>
-<filename>D:\Personal\OneDrive\University\A. Current Projects\New Hierarchical Figures\save_to_network_snippet.pcl</filename>
+<filename>D:\Personal\OneDrive\University\A. Current Projects\New Hierarchical Figures\sub_screen_scaling.pcl</filename>
+<filename>D:\Personal\OneDrive\University\A. Current Projects\New Hierarchical Figures\sub_force_local_save.pcl</filename>
 </efs>
 <exclusive_mouse>1</exclusive_mouse>
 <exp_version>0.1.0</exp_version>
@@ -158,7 +159,7 @@
 </ss>
 </dcfg>
 </cfg>
-<cs>1</cs>
+<cs>-1</cs>
 <dl>
 <grps>
 <grp>
@@ -586,7 +587,7 @@ Useful when running the experiment from a network location (improves stability).
 <max_y>
 <inc>1</inc>
 <origin>2</origin>
-<units>2</units>
+<units>3</units>
 <used>0</used>
 <value>0</value>
 </max_y>
@@ -600,11 +601,11 @@ Useful when running the experiment from a network location (improves stability).
 <min_y>
 <inc>1</inc>
 <origin>2</origin>
-<units>2</units>
-<used>0</used>
-<value>0</value>
+<units>3</units>
+<used>1</used>
+<value>-0.25</value>
 </min_y>
-<name>Left Down</name>
+<name>Left Down (half)</name>
 <primary></primary>
 <to>
 <states>down;</states>
@@ -631,7 +632,7 @@ Useful when running the experiment from a network location (improves stability).
 <value>0</value>
 </max_y>
 <min_x>
-<inc>0</inc>
+<inc>1</inc>
 <origin>2</origin>
 <units>1</units>
 <used>1</used>
@@ -640,11 +641,11 @@ Useful when running the experiment from a network location (improves stability).
 <min_y>
 <inc>1</inc>
 <origin>2</origin>
-<units>2</units>
-<used>0</used>
-<value>0</value>
+<units>3</units>
+<used>1</used>
+<value>-0.25</value>
 </min_y>
-<name>Right Down</name>
+<name>Right Down (half)</name>
 <primary></primary>
 <to>
 <states>down;</states>
@@ -706,9 +707,9 @@ Useful when running the experiment from a network location (improves stability).
 <max_y>
 <inc>1</inc>
 <origin>2</origin>
-<units>1</units>
+<units>3</units>
 <used>1</used>
-<value>0</value>
+<value>-0.25</value>
 </max_y>
 <min_x>
 <inc>1</inc>
@@ -725,6 +726,86 @@ Useful when running the experiment from a network location (improves stability).
 <value>0</value>
 </min_y>
 <name>Bottom Down</name>
+<primary></primary>
+<to>
+<states>down;</states>
+<type>5</type>
+</to>
+</but>
+<but>
+<from>
+<states>down;</states>
+<type>2</type>
+</from>
+<max_x>
+<inc>1</inc>
+<origin>2</origin>
+<units>2</units>
+<used>1</used>
+<value>0</value>
+</max_x>
+<max_y>
+<inc>1</inc>
+<origin>2</origin>
+<units>2</units>
+<used>0</used>
+<value>0</value>
+</max_y>
+<min_x>
+<inc>1</inc>
+<origin>2</origin>
+<units>2</units>
+<used>0</used>
+<value>0</value>
+</min_x>
+<min_y>
+<inc>1</inc>
+<origin>2</origin>
+<units>2</units>
+<used>0</used>
+<value>0</value>
+</min_y>
+<name>Left Down</name>
+<primary></primary>
+<to>
+<states>down;</states>
+<type>5</type>
+</to>
+</but>
+<but>
+<from>
+<states>down;</states>
+<type>2</type>
+</from>
+<max_x>
+<inc>1</inc>
+<origin>2</origin>
+<units>2</units>
+<used>0</used>
+<value>0</value>
+</max_x>
+<max_y>
+<inc>1</inc>
+<origin>2</origin>
+<units>2</units>
+<used>0</used>
+<value>0</value>
+</max_y>
+<min_x>
+<inc>1</inc>
+<origin>2</origin>
+<units>2</units>
+<used>1</used>
+<value>0</value>
+</min_x>
+<min_y>
+<inc>1</inc>
+<origin>2</origin>
+<units>2</units>
+<used>0</used>
+<value>0</value>
+</min_y>
+<name>Right Down</name>
 <primary></primary>
 <to>
 <states>down;</states>
@@ -761,23 +842,31 @@ Useful when running the experiment from a network location (improves stability).
 <ibn>Left Down</ibn>
 <ibn>Right Down</ibn>
 <ibn>Bottom Down</ibn>
+<ibn>Left Down (half)</ibn>
+<ibn>Right Down (half)</ibn>
 <idn>pointing device</idn>
 <index>0</index>
 <index>1</index>
 <index>2</index>
+<index>3</index>
+<index>4</index>
 <label></label>
 <label></label>
 <label></label>
+<label></label>
+<label></label>
+<offset>6</offset>
+<offset>7</offset>
+<offset>5</offset>
 <offset>2</offset>
 <offset>3</offset>
-<offset>5</offset>
 </idv>
 </sett>
 </conf>
 <conf>
 <guid>{7FA9CB2D-2B5C-4894-94D8-25522BCB467A}</guid>
 <sett>
-<idv>
+<abd>
 <device_type>3</device_type>
 <dx_device_type>19</dx_device_type>
 <ibn>Z</ibn>
@@ -789,17 +878,30 @@ Useful when running the experiment from a network location (improves stability).
 <index>2</index>
 <label></label>
 <label></label>
-<label></label>
+<label>SPACE</label>
 <offset>44</offset>
 <offset>53</offset>
 <offset>57</offset>
-</idv>
+</abd>
+<abd>
+<device_type>5</device_type>
+<dx_device_type>0</dx_device_type>
+<ibn>Left Down (half)</ibn>
+<ibn>Right Down (half)</ibn>
+<idn>pointing device</idn>
+<index>3</index>
+<index>4</index>
+<label></label>
+<label></label>
+<offset>2</offset>
+<offset>3</offset>
+</abd>
 </sett>
 </conf>
 <conf>
 <guid>{2EB87493-79DB-430C-A97A-A68FAA2CA64D}</guid>
 <sett>
-<idv>
+<abd>
 <device_type>3</device_type>
 <dx_device_type>19</dx_device_type>
 <ibn>Z</ibn>
@@ -811,11 +913,24 @@ Useful when running the experiment from a network location (improves stability).
 <index>2</index>
 <label></label>
 <label></label>
-<label></label>
+<label>SPACE</label>
 <offset>44</offset>
 <offset>53</offset>
 <offset>57</offset>
-</idv>
+</abd>
+<abd>
+<device_type>5</device_type>
+<dx_device_type>0</dx_device_type>
+<ibn>Left Down (half)</ibn>
+<ibn>Right Down (half)</ibn>
+<idn>pointing device</idn>
+<index>3</index>
+<index>4</index>
+<label></label>
+<label></label>
+<offset>2</offset>
+<offset>3</offset>
+</abd>
 </sett>
 </conf>
 </overrides>
@@ -898,4 +1013,4 @@ Useful when running the experiment from a network location (improves stability).
 <unc></unc>
 <upb>0</upb>
 <urp>0</urp>
-<wob>1</wob>
+<wob>0</wob>
