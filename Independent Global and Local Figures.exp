@@ -1,5 +1,5 @@
 <ver>20.3</ver>
-<efn>D:\Personal\OneDrive\University\A. Current Projects\New Hierarchical Figures\Independent Global and Local Figures.exp</efn>
+<efn>C:\Users\Michael\OneDrive\University\A. Current Projects\New Hierarchical Figures\Independent Global and Local Figures.exp</efn>
 <author>MCWE</author>
 <con>
 <pause>P</pause>
@@ -40,13 +40,13 @@
 <lfn></lfn>
 </docs>
 <dp_list></dp_list>
-<dsd>D:\Personal\OneDrive\University\A. Current Projects\New Hierarchical Figures</dsd>
+<dsd>C:\Users\Michael\OneDrive\University\A. Current Projects\New Hierarchical Figures\Stimuli</dsd>
 <dwm>0</dwm>
 <dxv>8</dxv>
 <efs>
-<filename>D:\Personal\OneDrive\University\A. Current Projects\New Hierarchical Figures\GLO-LO scenario.sce</filename>
-<filename>D:\Personal\OneDrive\University\A. Current Projects\New Hierarchical Figures\sub_screen_scaling.pcl</filename>
-<filename>D:\Personal\OneDrive\University\A. Current Projects\New Hierarchical Figures\sub_force_local_save.pcl</filename>
+<filename>C:\Users\Michael\OneDrive\University\A. Current Projects\New Hierarchical Figures\GLO-LO scenario.sce</filename>
+<filename>C:\Users\Michael\OneDrive\University\A. Current Projects\New Hierarchical Figures\sub_screen_scaling.pcl</filename>
+<filename>C:\Users\Michael\OneDrive\University\A. Current Projects\New Hierarchical Figures\sub_force_local_save.pcl</filename>
 </efs>
 <exclusive_mouse>1</exclusive_mouse>
 <exp_version>0.1.0</exp_version>
@@ -298,7 +298,7 @@ Useful when running the experiment from a network location (improves stability).
 <idt>0</idt>
 <ilc>0</ilc>
 <ip_chans></ip_chans>
-<lfd>D:\Personal\OneDrive\University\A. Current Projects\New Hierarchical Figures\SLP Logfiles</lfd>
+<lfd>C:\Users\Michael\OneDrive\University\A. Current Projects\New Hierarchical Figures\SLP Logfiles</lfd>
 <lnb>2</lnb>
 <lno>4</lno>
 <log>
@@ -387,6 +387,53 @@ Useful when running the experiment from a network location (improves stability).
 <name>HID Keyboard Device</name>
 </device>
 <device>
+<device_type>3</device_type>
+<dx_device_type>0</dx_device_type>
+<name>Standard 101/102-Key or Microsoft Natural PS/2 Keyboard for HP Hotkey Support</name>
+</device>
+<device>
+<abs_axis>
+<dead_zone>0</dead_zone>
+<max>1000</max>
+<min>-1000</min>
+<name>X-axis</name>
+<saturation>1</saturation>
+</abs_axis>
+<abs_axis>
+<dead_zone>0</dead_zone>
+<max>1000</max>
+<min>-1000</min>
+<name>Y-axis</name>
+<saturation>1</saturation>
+</abs_axis>
+<axis>
+<max>1000</max>
+<min>-1000</min>
+<name>X-axis</name>
+<restricted>1</restricted>
+<scale>1</scale>
+</axis>
+<axis>
+<max>1000</max>
+<min>-1000</min>
+<name>Y-axis</name>
+<restricted>1</restricted>
+<scale>1</scale>
+</axis>
+<axis>
+<max>1000</max>
+<min>-1000</min>
+<name>Wheel</name>
+<restricted>1</restricted>
+<scale>1</scale>
+</axis>
+<device_type>2</device_type>
+<dx_device_type>0</dx_device_type>
+<max_raw_pos>65535</max_raw_pos>
+<min_raw_pos>0</min_raw_pos>
+<name>Synaptics HID ClickPad</name>
+</device>
+<device>
 <abs_axis>
 <dead_zone>0</dead_zone>
 <max>1000</max>
@@ -429,14 +476,61 @@ Useful when running the experiment from a network location (improves stability).
 <name>HID-compliant mouse</name>
 </device>
 <device>
-<device_type>4</device_type>
-<dx_device_type>17</dx_device_type>
-<name>Dell KB216 Wired Keyboard</name>
+<abs_axis>
+<dead_zone>0</dead_zone>
+<max>1000</max>
+<min>-1000</min>
+<name>X-axis</name>
+<saturation>1</saturation>
+</abs_axis>
+<abs_axis>
+<dead_zone>0</dead_zone>
+<max>1000</max>
+<min>-1000</min>
+<name>Y-axis</name>
+<saturation>1</saturation>
+</abs_axis>
+<axis>
+<max>1000</max>
+<min>-1000</min>
+<name>X-axis</name>
+<restricted>1</restricted>
+<scale>1</scale>
+</axis>
+<axis>
+<max>1000</max>
+<min>-1000</min>
+<name>Y-axis</name>
+<restricted>1</restricted>
+<scale>1</scale>
+</axis>
+<axis>
+<max>1000</max>
+<min>-1000</min>
+<name>Wheel</name>
+<restricted>1</restricted>
+<scale>1</scale>
+</axis>
+<device_type>2</device_type>
+<dx_device_type>0</dx_device_type>
+<max_raw_pos>65535</max_raw_pos>
+<min_raw_pos>0</min_raw_pos>
+<name>PS/2 Compatible Mouse</name>
 </device>
 <device>
 <device_type>4</device_type>
 <dx_device_type>17</dx_device_type>
-<name>Dell KB216 Wired Keyboard 1</name>
+<name>HP Wireless Button Driver</name>
+</device>
+<device>
+<device_type>4</device_type>
+<dx_device_type>17</dx_device_type>
+<name>Micr</name>
+</device>
+<device>
+<device_type>4</device_type>
+<dx_device_type>17</dx_device_type>
+<name>Micr 1</name>
 </device>
 <device>
 <axis>
@@ -603,7 +697,7 @@ Useful when running the experiment from a network location (improves stability).
 <origin>2</origin>
 <units>3</units>
 <used>1</used>
-<value>-0.25</value>
+<value>-0.3</value>
 </min_y>
 <name>Left Down (half)</name>
 <primary></primary>
@@ -643,7 +737,7 @@ Useful when running the experiment from a network location (improves stability).
 <origin>2</origin>
 <units>3</units>
 <used>1</used>
-<value>-0.25</value>
+<value>-0.3</value>
 </min_y>
 <name>Right Down (half)</name>
 <primary></primary>
@@ -709,7 +803,7 @@ Useful when running the experiment from a network location (improves stability).
 <origin>2</origin>
 <units>3</units>
 <used>1</used>
-<value>-0.25</value>
+<value>-0.3</value>
 </max_y>
 <min_x>
 <inc>1</inc>
@@ -934,7 +1028,7 @@ Useful when running the experiment from a network location (improves stability).
 </sett>
 </conf>
 </overrides>
-<sfn>D:\Personal\OneDrive\University\A. Current Projects\New Hierarchical Figures\GLO-LO scenario.sce</sfn>
+<sfn>C:\Users\Michael\OneDrive\University\A. Current Projects\New Hierarchical Figures\GLO-LO scenario.sce</sfn>
 </sce>
 <sct>
 <capture_device>
@@ -967,7 +1061,7 @@ Useful when running the experiment from a network location (improves stability).
 <sde>
 <buffer_length>1000</buffer_length>
 <custom_buf>sec_sw</custom_buf>
-<default>1</default>
+<default>0</default>
 <dup_channels>1</dup_channels>
 <ex_period>10</ex_period>
 <halt_on_underrun>1</halt_on_underrun>
@@ -979,7 +1073,7 @@ Useful when running the experiment from a network location (improves stability).
 <side_speakers>1</side_speakers>
 <use_rewind_distance>0</use_rewind_distance>
 </sde>
-<sdv>Primary Sound Driver</sdv>
+<sdv>None</sdv>
 <show_dis>0</show_dis>
 <show_parm>0</show_parm>
 <show_term>1</show_term>

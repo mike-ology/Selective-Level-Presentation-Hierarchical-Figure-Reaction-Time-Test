@@ -75,9 +75,9 @@ begin
 	if parameter_manager.configuration_name() == "Mobile / Touchscreen" then
 		screen_check_text_0.set_caption( "This experiment was designed for screens running at 1920 x 1080.\n\nIf the yellow frame does not reach the edge of the screen (or you cannot see it),\nplease exit the experiment and adjust the screen settings.\n\nAlternatively, tap CONTINUE to adjust the display now.", true );
 		screen_check_pic.add_part( screen_check_text_0, 0, 0 );
-		screen_check_pic.add_part( continue_button, 0, -0.75 * (1080 / 2) * starting_scale_factor );
+		screen_check_pic.add_part( continue_box, 0, -0.80 * (1080 / 2) * starting_scale_factor );
 		screen_check_pic.add_part( screen_check_frame, 0, 0 );
-		screen_check_pic.add_part( continue_text, 0, -0.75 * (1080 / 2) * starting_scale_factor );
+		screen_check_pic.add_part( continue_text, 0, -0.80 * (1080 / 2) * starting_scale_factor );
 	else
 		screen_check_pic.add_part( screen_check_text_0, 0, 0 );
 		screen_check_pic.add_part( screen_check_frame, 0, 0 );
@@ -131,9 +131,9 @@ begin
 			screen_check_pic.add_part( smaller_text, (-1920 / 4) * scale_factor, 0.25 * (1080 / 2) * scale_factor );
 			screen_check_pic.add_part( larger_button, ( 1920 / 4) * scale_factor, 0 );
 			screen_check_pic.add_part( larger_text, ( 1920 / 4) * scale_factor, 0.25 * (1080 / 2) * scale_factor );
-			screen_check_pic.add_part( continue_button, 0, -0.75 * (1080 / 2) * starting_scale_factor );
+			screen_check_pic.add_part( continue_box, 0, -0.80 * (1080 / 2) * starting_scale_factor );
 			screen_check_pic.add_part( screen_check_frame, 0, 0 );
-			screen_check_pic.add_part( continue_text, 0, -0.75 * (1080 / 2) * starting_scale_factor );
+			screen_check_pic.add_part( continue_text, 0, -0.80 * (1080 / 2) * starting_scale_factor );
 		else
 			screen_check_trial.set_terminator_buttons( { 1, 2, 3 } );
 			screen_check_pic.add_part( screen_check_text_1, 0, 50 );

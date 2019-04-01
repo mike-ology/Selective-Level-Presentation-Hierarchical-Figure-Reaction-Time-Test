@@ -13,26 +13,34 @@ default_formatted_text = true;
 
 begin;
 
+array { 
+	bitmap { filename = "example_global_E.jpg"; preload = false; } bitmap_global_E;
+	bitmap { filename = "example_global_P.jpg"; preload = false; } bitmap_global_P;
+	bitmap { filename = "example_global_H.jpg"; preload = false; } bitmap_global_H;
+	bitmap { filename = "example_global_U.jpg"; preload = false; } bitmap_global_U;
+	bitmap { filename = "example_global_S.jpg"; preload = false; } bitmap_global_S;
+
+	bitmap { filename = "example_local_E.jpg"; preload = false; } bitmap_local_E;
+	bitmap { filename = "example_local_P.jpg"; preload = false; } bitmap_local_P;
+	bitmap { filename = "example_local_H.jpg"; preload = false; } bitmap_local_H;
+	bitmap { filename = "example_local_U.jpg"; preload = false; } bitmap_local_U;
+	bitmap { filename = "example_local_S.jpg"; preload = false; } bitmap_local_S;
+} bitmap_examples;
+
 $exposure_duration = EXPARAM( "Trial Duration" : 1000 ); 
+
+text { caption = "PLACEHOLDER"; } text1;
+text { caption = "PLACEHOLDER"; } text2;
+text { caption = "PLACEHOLDER"; } text3;
 
 trial {
 	trial_type = specific_response;
-	terminator_button = 3;
+	terminator_button = 1, 2, 4, 5;
 	trial_duration = forever;
-	picture {
-		text {
-			caption = "Press [Z] if the letter E is present.\nPress [/] if the letter P is present.\nPress nothing is neither are present.";
-		}instruct_text_1;	
-		x = 0; y = 100;
-		text {
-			caption = "The letters may appear at the global (large) or local (small) level.";
-		}instruct_text_2;
-		x = 0; y = 0;
-		text {
-			caption = "Press [SPACEBAR] to begin.";
-		}instruct_text_3;
-		x = 0; y = -100;
-	}instruct_pic;
+	stimulus_event {
+		picture {
+		}instruct_pic;
+	}instruct_event;
 }instruct_trial;
 
 trial {
@@ -109,23 +117,35 @@ end;
 # Create "CONTINUE" prompt for use on touchscreens
 # Note: The scaling on this button can not be changed so as to match response settings! 
 
-text continue_text = new text;
-line_graphic continue_button = new line_graphic;
+box continue_box = new box( 1080.0/5 * starting_scale_factor, 1920.0 * starting_scale_factor,  rgb_color(0,255,0) );
+line_graphic continue_break = new line_graphic();
+continue_break.add_line( 0, 1080.0/10 * starting_scale_factor, 0, -1080.0/10 * starting_scale_factor );
+continue_break.set_line_width( 10.0 );
+continue_break.set_line_color( 0, 0, 0, 255 );
+continue_break.redraw();
 
-continue_text.set_font_color( 0, 0, 0 );
-continue_text.set_background_color( 0, 255, 0, 128 );
-continue_text.set_font_size( 48.0 );
+text continue_text = new text;
+text continue_next = new text;
+text continue_previous = new text;
+text continue_begin = new text;
+
+array <text> continue_prompts [0];
+continue_prompts.add( continue_text );
+continue_prompts.add( continue_next );
+continue_prompts.add( continue_previous );
+continue_prompts.add( continue_begin );
+
+loop int i = 1 until i > continue_prompts.count() begin
+	continue_prompts[i].set_font_color( 0, 0, 0 );
+	continue_prompts[i].set_background_color( 0, 255, 0, 128 );
+	continue_prompts[i].set_font_size( 48.0 );
+	i = i + 1;
+end;
+
 continue_text.set_caption( "CONTINUE", true );
 
-continue_button.set_fill_color( 0, 255, 0, 255 );
-continue_button.add_line( (-1920 / 2) * starting_scale_factor, (1080 / 8) * starting_scale_factor, (1920 / 2) * starting_scale_factor, (1080 / 8) * starting_scale_factor );
-continue_button.line_to( (1920 / 2) * starting_scale_factor, (-1080 / 8) * starting_scale_factor );
-continue_button.line_to( (-1920 / 2) * starting_scale_factor, (-1080 / 8) * starting_scale_factor );
-continue_button.close( true );
-continue_button.redraw();
-
 # Example coordinates for continue prompt to match response settings
-# picture_object.add_part( continue_object, 0, -0.75 * (1080 / 2) * starting_scale_factor );
+# picture_object.add_part( continue_object, 0, -0.80 * (1080 / 2) * starting_scale_factor );
 
 #######################
 
@@ -141,6 +161,30 @@ screen_check();
 double xs = 13.0 * scale_factor;
 double ys = 11.0 * scale_factor;
 double lw = 2.0 * scale_factor;
+
+double bitmap_height = bitmap_global_E.height() * scale_factor;
+double bitmap_width = bitmap_global_E.width() * scale_factor;
+
+bitmap_global_E.set_load_size( 0, 0, scale_factor );
+bitmap_global_P.set_load_size( 0, 0, scale_factor );
+bitmap_global_H.set_load_size( 0, 0, scale_factor );
+bitmap_global_U.set_load_size( 0, 0, scale_factor );
+bitmap_global_S.set_load_size( 0, 0, scale_factor );
+bitmap_local_E.set_load_size( 0, 0, scale_factor );
+bitmap_local_P.set_load_size( 0, 0, scale_factor );
+bitmap_local_H.set_load_size( 0, 0, scale_factor );
+bitmap_local_U.set_load_size( 0, 0, scale_factor );
+bitmap_local_S.set_load_size( 0, 0, scale_factor );
+bitmap_global_E.load();
+bitmap_global_P.load();
+bitmap_global_H.load();
+bitmap_global_U.load();
+bitmap_global_S.load();
+bitmap_local_E.load();
+bitmap_local_P.load();
+bitmap_local_H.load();
+bitmap_local_U.load();
+bitmap_local_S.load();
 
 line_graphic local_E = new line_graphic;
 line_graphic local_P = new line_graphic;
@@ -207,14 +251,138 @@ local_letters.add( local_H );
 local_letters.add( local_U );
 local_letters.add( local_S );
 
-### Change instructions for mobiles / touchscreens
+### Create instructions
+
+picture instruct1 = new picture;
+picture instruct2 = new picture;
+picture instruct3 = new picture;
+picture instruct4 = new picture;
+picture instruct5 = new picture;
+
+array <picture> instruct_array [0];
+instruct_array.add( instruct1 );
+instruct_array.add( instruct2 );
+instruct_array.add( instruct3 );
+instruct_array.add( instruct4 );
+
 if parameter_manager.configuration_name() == "Mobile / Touchscreen" then
-	instruct_pic.remove_part( 3 );
-	instruct_text_1.set_caption( "Touch the left-half of the screen if the letter E is present.\nTouch the right-half of the screen if the letter P is present.\nTouch nothing is neither are present.", true );
-	continue_text.set_caption( "Tap here to begin.", true );
-	instruct_pic.add_part( continue_button, 0, -0.75 * (1080 / 2) * starting_scale_factor );
-	instruct_pic.add_part( continue_text, 0, -0.75 * (1080 / 2) * starting_scale_factor );
+	# touchscreen instructions
+
+	text page1_text = new text();
+	page1_text.set_caption( "In this task, you will view various images of letters\nand respond to certain letters (but not others).", true );
+	continue_text.set_caption( "NEXT PAGE", true );
+	instruct1.add_part( page1_text, 0, 0 );
+	instruct1.add_part( continue_box, 0, -0.80 * (1080 / 2) * starting_scale_factor );
+	instruct1.add_part( continue_text, 0, -0.80 * (1080 / 2) * starting_scale_factor );
+
+	text page2_text = new text();
+	page2_text.set_caption( "You will need to look for the letter E and P (see examples above).\nThey can appear at either the smaller (local level) or larger (global) level.\n\nTap anywhere on the left-side of the screen if the letter E is present.\nTap anywhere on the right-side of the screen if the letter P is present.", true );
+	continue_next.set_caption( "NEXT PAGE", true );
+	continue_previous.set_caption( "PREVIOUS PAGE", true );
+	instruct2.add_part( bitmap_global_E, -300, 200 );
+	instruct2.add_part( bitmap_global_P, -100, 200 );
+	instruct2.add_part( bitmap_local_E, 100, 200 );
+	instruct2.add_part( bitmap_local_P, 300, 200 );
+	instruct2.add_part( page2_text, 0, -100 );
+	instruct2.add_part( continue_box, 0, -0.80 * (1080 / 2) * starting_scale_factor );
+	instruct2.add_part( continue_break, 0, -0.80 * (1080 / 2) * starting_scale_factor );
+	instruct2.add_part( continue_next, (1920.0 / 4) * starting_scale_factor, -0.80 * (1080 / 2) * starting_scale_factor );
+	instruct2.add_part( continue_previous, (-1920.0 / 4) * starting_scale_factor, -0.80 * (1080 / 2) * starting_scale_factor );
+	
+	text page3_text = new text();
+	page3_text.set_caption( "Other letters will also appear (see examples above).\n\nDo NOT tap anywhere if these appear.\nOnly respond if an E or P is present.", true );
+	continue_next.set_caption( "NEXT PAGE", true );
+	continue_previous.set_caption( "PREVIOUS PAGE", true );
+	instruct3.add_part( bitmap_global_H, -500, 200 );
+	instruct3.add_part( bitmap_global_U, -300, 200 );
+	instruct3.add_part( bitmap_global_S, -100, 200 );
+	instruct3.add_part( bitmap_local_H, 100, 200 );
+	instruct3.add_part( bitmap_local_U, 300, 200 );
+	instruct3.add_part( bitmap_local_S, 500, 200 );
+	instruct3.add_part( page3_text, 0, -100 );
+	instruct3.add_part( continue_box, 0, -0.80 * (1080 / 2) * starting_scale_factor );
+	instruct3.add_part( continue_break, 0, -0.80 * (1080 / 2) * starting_scale_factor );
+	instruct3.add_part( continue_next, (1920.0 / 4) * starting_scale_factor, -0.80 * (1080 / 2) * starting_scale_factor );
+	instruct3.add_part( continue_previous, (-1920.0 / 4) * starting_scale_factor, -0.80 * (1080 / 2) * starting_scale_factor );
+	
+	text page4_text = new text();
+	page4_text.set_caption( "Try to make your responses (when required) as quickly as possible.\n\nThere will be opportunities for short breaks though-out the task\n\nAre you read to start some practice trials?", true );
+	continue_begin.set_caption( "START PRACTICE", true );
+	continue_previous.set_caption( "PREVIOUS PAGE", true );
+	instruct4.add_part( page4_text, 0, 0 );
+	instruct4.add_part( continue_box, 0, -0.80 * (1080 / 2) * starting_scale_factor );
+	instruct4.add_part( continue_break, 0, -0.80 * (1080 / 2) * starting_scale_factor );
+	instruct4.add_part( continue_begin, (1920.0 / 4) * starting_scale_factor, -0.80 * (1080 / 2) * starting_scale_factor );
+	instruct4.add_part( continue_previous, (-1920.0 / 4) * starting_scale_factor, -0.80 * (1080 / 2) * starting_scale_factor );
+	
 else
+	# not a touchscreen
+	
+	text page1_text = new text();
+	page1_text.set_caption( "In this task, you will view various images of letters\nand respond to certain letters (but not others).", true );
+	continue_text.set_caption( "NEXT PAGE [/]", true );
+	instruct1.add_part( page1_text, 0, 0 );
+	instruct1.add_part( continue_box, 0, -0.80 * (1080 / 2) * starting_scale_factor );
+	instruct1.add_part( continue_text, 0, -0.80 * (1080 / 2) * starting_scale_factor );
+
+	text page2_text = new text();
+	page2_text.set_caption( "You will need to look for the letter E and P (see examples above).\nThey can appear at either the smaller (local level) or larger (global) level.\n\nPress [Z] if the letter E is present.\nPress [/] if the letter P is present.", true );
+	continue_next.set_caption( "NEXT PAGE [/]", true );
+	continue_previous.set_caption( "[Z] PREVIOUS PAGE", true );
+	instruct2.add_part( bitmap_global_E, -300, 200 );
+	instruct2.add_part( bitmap_global_P, -100, 200 );
+	instruct2.add_part( bitmap_local_E, 100, 200 );
+	instruct2.add_part( bitmap_local_P, 300, 200 );
+	instruct2.add_part( page2_text, 0, -100 );
+	instruct2.add_part( continue_box, 0, -0.80 * (1080 / 2) * starting_scale_factor );
+	instruct2.add_part( continue_break, 0, -0.80 * (1080 / 2) * starting_scale_factor );
+	instruct2.add_part( continue_next, (1920.0 / 4) * starting_scale_factor, -0.80 * (1080 / 2) * starting_scale_factor );
+	instruct2.add_part( continue_previous, (-1920.0 / 4) * starting_scale_factor, -0.80 * (1080 / 2) * starting_scale_factor );
+	
+	text page3_text = new text();
+	page3_text.set_caption( "Other letters will also appear (see examples above).\n\nDo not press anything if these appear.\nOnly respond if an E or P is present.", true );
+	continue_next.set_caption( "NEXT PAGE [/]", true );
+	continue_previous.set_caption( "[Z] PREVIOUS PAGE", true );
+	instruct3.add_part( bitmap_global_H, -500, 200 );
+	instruct3.add_part( bitmap_global_U, -300, 200 );
+	instruct3.add_part( bitmap_global_S, -100, 200 );
+	instruct3.add_part( bitmap_local_H, 100, 200 );
+	instruct3.add_part( bitmap_local_U, 300, 200 );
+	instruct3.add_part( bitmap_local_S, 500, 200 );
+	instruct3.add_part( page3_text, 0, -100 );
+	instruct3.add_part( continue_box, 0, -0.80 * (1080 / 2) * starting_scale_factor );
+	instruct3.add_part( continue_break, 0, -0.80 * (1080 / 2) * starting_scale_factor );
+	instruct3.add_part( continue_next, (1920.0 / 4) * starting_scale_factor, -0.80 * (1080 / 2) * starting_scale_factor );
+	instruct3.add_part( continue_previous, (-1920.0 / 4) * starting_scale_factor, -0.80 * (1080 / 2) * starting_scale_factor );
+	
+	text page4_text = new text();
+	page4_text.set_caption( "Try to make your responses (when required) as quickly as possible.\n\nThere will be opportunities for short breaks though-out the task\n\nAre you read to start some practice trials?", true );
+	continue_begin.set_caption( "START PRACTICE [/]", true );
+	continue_previous.set_caption( "[Z] PREVIOUS PAGE", true );
+	instruct4.add_part( page4_text, 0, 0 );
+	instruct4.add_part( continue_box, 0, -0.80 * (1080 / 2) * starting_scale_factor );
+	instruct4.add_part( continue_break, 0, -0.80 * (1080 / 2) * starting_scale_factor );
+	instruct4.add_part( continue_begin, (1920.0 / 4) * starting_scale_factor, -0.80 * (1080 / 2) * starting_scale_factor );
+	instruct4.add_part( continue_previous, (-1920.0 / 4) * starting_scale_factor, -0.80 * (1080 / 2) * starting_scale_factor );
+
+end;
+
+loop
+	int i = 1
+until
+	i > instruct_array.count()
+begin
+	instruct_event.set_stimulus( instruct_array[i] );
+	instruct_trial.present();
+	
+	int response_key = response_manager.last_response();
+	if response_key == 2 || response_key == 3 || response_key == 5 then
+		i = i + 1;
+	elseif response_key == 1 || response_key == 4 then
+		i = i - 1;
+		if i == 0 then i = 1 else end;
+	end;
+	
 end;
 
 ###   Define logfile parameters and initialize
@@ -317,7 +485,7 @@ loop int i = 1 until i > parameter_manager.get_int( "Distractor Trials", 2 ) beg
 	i = i + 1;
 end;
 
-instruct_trial.present();
+#instruct_trial.present();
 
 int max_blocks = parameter_manager.get_int( "Maximum Blocks", 1 );
 
