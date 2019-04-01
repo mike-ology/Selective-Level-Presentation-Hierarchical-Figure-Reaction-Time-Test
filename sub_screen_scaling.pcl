@@ -147,7 +147,6 @@ begin
 		response_key = response_manager.last_response();
 		
 		if response_key == 1 || response_key == 4 then
-			term.print_line( "smaller" );
 			scale_factor = scale_factor - 0.1;
 			if scale_factor < 0.5 then
 				scale_factor = 0.5
@@ -155,7 +154,6 @@ begin
 			end;
 		elseif
 			response_key == 2 || response_key == 5 then
-			term.print_line( "larger" );
 			scale_factor = scale_factor + 0.1;
 			if scale_factor > 2.0 then
 				scale_factor = 2.0

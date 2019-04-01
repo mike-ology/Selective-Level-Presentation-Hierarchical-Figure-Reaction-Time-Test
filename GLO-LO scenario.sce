@@ -29,10 +29,6 @@ array {
 
 $exposure_duration = EXPARAM( "Trial Duration" : 1000 ); 
 
-text { caption = "PLACEHOLDER"; } text1;
-text { caption = "PLACEHOLDER"; } text2;
-text { caption = "PLACEHOLDER"; } text3;
-
 trial {
 	trial_type = specific_response;
 	terminator_button = 1, 2, 4, 5;
@@ -78,15 +74,7 @@ trial {
 	terminator_button = 3;
 	trial_duration = forever;
 	picture {
-		text {
-			caption = "Block finished!";
-		}block_message;	
-		x = 0; y = 0;
-		text {
-			caption = "Press [SPACEBAR] to continue.";
-		}block_prompt;
-		x = 0; y = -100;
-	};
+	}block_pic;
 }end_block_trial;
 
 picture { 
@@ -95,6 +83,8 @@ picture {
 	} feedback_text;
 	x = 0; y = 0;
 }feedback_pic;
+
+text { caption = "PLACEHOLDER"; } block_message;
 
 begin_pcl;
 
@@ -111,6 +101,7 @@ if x_starting_scale_factor  < y_starting_scale_factor then
 else
 	starting_scale_factor = y_starting_scale_factor
 end;
+
 
 #######################
 
@@ -165,26 +156,15 @@ double lw = 2.0 * scale_factor;
 double bitmap_height = bitmap_global_E.height() * scale_factor;
 double bitmap_width = bitmap_global_E.width() * scale_factor;
 
-bitmap_global_E.set_load_size( 0, 0, scale_factor );
-bitmap_global_P.set_load_size( 0, 0, scale_factor );
-bitmap_global_H.set_load_size( 0, 0, scale_factor );
-bitmap_global_U.set_load_size( 0, 0, scale_factor );
-bitmap_global_S.set_load_size( 0, 0, scale_factor );
-bitmap_local_E.set_load_size( 0, 0, scale_factor );
-bitmap_local_P.set_load_size( 0, 0, scale_factor );
-bitmap_local_H.set_load_size( 0, 0, scale_factor );
-bitmap_local_U.set_load_size( 0, 0, scale_factor );
-bitmap_local_S.set_load_size( 0, 0, scale_factor );
-bitmap_global_E.load();
-bitmap_global_P.load();
-bitmap_global_H.load();
-bitmap_global_U.load();
-bitmap_global_S.load();
-bitmap_local_E.load();
-bitmap_local_P.load();
-bitmap_local_H.load();
-bitmap_local_U.load();
-bitmap_local_S.load();
+loop
+	int i = 1
+until
+	i > bitmap_examples.count()
+begin	
+	bitmap_examples[i].set_load_size( 0, 0, scale_factor );
+	bitmap_examples[i].load();
+	i = i + 1;
+end;
 
 line_graphic local_E = new line_graphic;
 line_graphic local_P = new line_graphic;
@@ -279,11 +259,11 @@ if parameter_manager.configuration_name() == "Mobile / Touchscreen" then
 	page2_text.set_caption( "You will need to look for the letter E and P (see examples above).\nThey can appear at either the smaller (local level) or larger (global) level.\n\nTap anywhere on the left-side of the screen if the letter E is present.\nTap anywhere on the right-side of the screen if the letter P is present.", true );
 	continue_next.set_caption( "NEXT PAGE", true );
 	continue_previous.set_caption( "PREVIOUS PAGE", true );
-	instruct2.add_part( bitmap_global_E, -300, 200 );
-	instruct2.add_part( bitmap_global_P, -100, 200 );
-	instruct2.add_part( bitmap_local_E, 100, 200 );
-	instruct2.add_part( bitmap_local_P, 300, 200 );
-	instruct2.add_part( page2_text, 0, -100 );
+	instruct2.add_part( bitmap_global_E, -300 * scale_factor, 200 * scale_factor );
+	instruct2.add_part( bitmap_global_P, -100 * scale_factor, 200 * scale_factor );
+	instruct2.add_part( bitmap_local_E, 100 * scale_factor, 200 * scale_factor );
+	instruct2.add_part( bitmap_local_P, 300 * scale_factor, 200 * scale_factor );
+	instruct2.add_part( page2_text, 0 * scale_factor, -100 * scale_factor );
 	instruct2.add_part( continue_box, 0, -0.80 * (1080 / 2) * starting_scale_factor );
 	instruct2.add_part( continue_break, 0, -0.80 * (1080 / 2) * starting_scale_factor );
 	instruct2.add_part( continue_next, (1920.0 / 4) * starting_scale_factor, -0.80 * (1080 / 2) * starting_scale_factor );
@@ -293,13 +273,13 @@ if parameter_manager.configuration_name() == "Mobile / Touchscreen" then
 	page3_text.set_caption( "Other letters will also appear (see examples above).\n\nDo NOT tap anywhere if these appear.\nOnly respond if an E or P is present.", true );
 	continue_next.set_caption( "NEXT PAGE", true );
 	continue_previous.set_caption( "PREVIOUS PAGE", true );
-	instruct3.add_part( bitmap_global_H, -500, 200 );
-	instruct3.add_part( bitmap_global_U, -300, 200 );
-	instruct3.add_part( bitmap_global_S, -100, 200 );
-	instruct3.add_part( bitmap_local_H, 100, 200 );
-	instruct3.add_part( bitmap_local_U, 300, 200 );
-	instruct3.add_part( bitmap_local_S, 500, 200 );
-	instruct3.add_part( page3_text, 0, -100 );
+	instruct3.add_part( bitmap_global_H, -500 * scale_factor, 200 * scale_factor );
+	instruct3.add_part( bitmap_global_U, -300 * scale_factor, 200 * scale_factor );
+	instruct3.add_part( bitmap_global_S, -100 * scale_factor, 200 * scale_factor );
+	instruct3.add_part( bitmap_local_H, 100 * scale_factor, 200 * scale_factor );
+	instruct3.add_part( bitmap_local_U, 300 * scale_factor, 200 * scale_factor );
+	instruct3.add_part( bitmap_local_S, 500 * scale_factor, 200 * scale_factor );
+	instruct3.add_part( page3_text, 0 * scale_factor, -100 * scale_factor );
 	instruct3.add_part( continue_box, 0, -0.80 * (1080 / 2) * starting_scale_factor );
 	instruct3.add_part( continue_break, 0, -0.80 * (1080 / 2) * starting_scale_factor );
 	instruct3.add_part( continue_next, (1920.0 / 4) * starting_scale_factor, -0.80 * (1080 / 2) * starting_scale_factor );
@@ -309,7 +289,7 @@ if parameter_manager.configuration_name() == "Mobile / Touchscreen" then
 	page4_text.set_caption( "Try to make your responses (when required) as quickly as possible.\n\nThere will be opportunities for short breaks though-out the task\n\nAre you read to start some practice trials?", true );
 	continue_begin.set_caption( "START PRACTICE", true );
 	continue_previous.set_caption( "PREVIOUS PAGE", true );
-	instruct4.add_part( page4_text, 0, 0 );
+	instruct4.add_part( page4_text, 0 * scale_factor, 0 * scale_factor );
 	instruct4.add_part( continue_box, 0, -0.80 * (1080 / 2) * starting_scale_factor );
 	instruct4.add_part( continue_break, 0, -0.80 * (1080 / 2) * starting_scale_factor );
 	instruct4.add_part( continue_begin, (1920.0 / 4) * starting_scale_factor, -0.80 * (1080 / 2) * starting_scale_factor );
@@ -321,7 +301,7 @@ else
 	text page1_text = new text();
 	page1_text.set_caption( "In this task, you will view various images of letters\nand respond to certain letters (but not others).", true );
 	continue_text.set_caption( "NEXT PAGE [/]", true );
-	instruct1.add_part( page1_text, 0, 0 );
+	instruct1.add_part( page1_text, 0 * scale_factor, 0 * scale_factor );
 	instruct1.add_part( continue_box, 0, -0.80 * (1080 / 2) * starting_scale_factor );
 	instruct1.add_part( continue_text, 0, -0.80 * (1080 / 2) * starting_scale_factor );
 
@@ -329,11 +309,11 @@ else
 	page2_text.set_caption( "You will need to look for the letter E and P (see examples above).\nThey can appear at either the smaller (local level) or larger (global) level.\n\nPress [Z] if the letter E is present.\nPress [/] if the letter P is present.", true );
 	continue_next.set_caption( "NEXT PAGE [/]", true );
 	continue_previous.set_caption( "[Z] PREVIOUS PAGE", true );
-	instruct2.add_part( bitmap_global_E, -300, 200 );
-	instruct2.add_part( bitmap_global_P, -100, 200 );
-	instruct2.add_part( bitmap_local_E, 100, 200 );
-	instruct2.add_part( bitmap_local_P, 300, 200 );
-	instruct2.add_part( page2_text, 0, -100 );
+	instruct2.add_part( bitmap_global_E, -300 * scale_factor, 200 * scale_factor );
+	instruct2.add_part( bitmap_global_P, -100 * scale_factor, 200 * scale_factor );
+	instruct2.add_part( bitmap_local_E, 100 * scale_factor, 200 * scale_factor );
+	instruct2.add_part( bitmap_local_P, 300 * scale_factor, 200 * scale_factor );
+	instruct2.add_part( page2_text, 0 * scale_factor, -100 * scale_factor );
 	instruct2.add_part( continue_box, 0, -0.80 * (1080 / 2) * starting_scale_factor );
 	instruct2.add_part( continue_break, 0, -0.80 * (1080 / 2) * starting_scale_factor );
 	instruct2.add_part( continue_next, (1920.0 / 4) * starting_scale_factor, -0.80 * (1080 / 2) * starting_scale_factor );
@@ -343,13 +323,13 @@ else
 	page3_text.set_caption( "Other letters will also appear (see examples above).\n\nDo not press anything if these appear.\nOnly respond if an E or P is present.", true );
 	continue_next.set_caption( "NEXT PAGE [/]", true );
 	continue_previous.set_caption( "[Z] PREVIOUS PAGE", true );
-	instruct3.add_part( bitmap_global_H, -500, 200 );
-	instruct3.add_part( bitmap_global_U, -300, 200 );
-	instruct3.add_part( bitmap_global_S, -100, 200 );
-	instruct3.add_part( bitmap_local_H, 100, 200 );
-	instruct3.add_part( bitmap_local_U, 300, 200 );
-	instruct3.add_part( bitmap_local_S, 500, 200 );
-	instruct3.add_part( page3_text, 0, -100 );
+	instruct3.add_part( bitmap_global_H, -500 * scale_factor, 200 * scale_factor );
+	instruct3.add_part( bitmap_global_U, -300 * scale_factor, 200 * scale_factor );
+	instruct3.add_part( bitmap_global_S, -100 * scale_factor, 200 * scale_factor );
+	instruct3.add_part( bitmap_local_H, 100 * scale_factor, 200 * scale_factor );
+	instruct3.add_part( bitmap_local_U, 300 * scale_factor, 200 * scale_factor );
+	instruct3.add_part( bitmap_local_S, 500 * scale_factor, 200 * scale_factor );
+	instruct3.add_part( page3_text, 0 * scale_factor, -100 * scale_factor );
 	instruct3.add_part( continue_box, 0, -0.80 * (1080 / 2) * starting_scale_factor );
 	instruct3.add_part( continue_break, 0, -0.80 * (1080 / 2) * starting_scale_factor );
 	instruct3.add_part( continue_next, (1920.0 / 4) * starting_scale_factor, -0.80 * (1080 / 2) * starting_scale_factor );
@@ -359,7 +339,7 @@ else
 	page4_text.set_caption( "Try to make your responses (when required) as quickly as possible.\n\nThere will be opportunities for short breaks though-out the task\n\nAre you read to start some practice trials?", true );
 	continue_begin.set_caption( "START PRACTICE [/]", true );
 	continue_previous.set_caption( "[Z] PREVIOUS PAGE", true );
-	instruct4.add_part( page4_text, 0, 0 );
+	instruct4.add_part( page4_text, 0 * scale_factor, 0 * scale_factor );
 	instruct4.add_part( continue_box, 0, -0.80 * (1080 / 2) * starting_scale_factor );
 	instruct4.add_part( continue_break, 0, -0.80 * (1080 / 2) * starting_scale_factor );
 	instruct4.add_part( continue_begin, (1920.0 / 4) * starting_scale_factor, -0.80 * (1080 / 2) * starting_scale_factor );
@@ -596,6 +576,16 @@ begin
 
 	if block != max_blocks then
 		# not the last block
+		block_message.set_caption( "End of block!\n\nContinue when you are ready", true );
+		if parameter_manager.configuration_name() == "Mobile / Touchscreen" then
+			continue_text.set_caption( "NEXT BLOCK", true );
+		else
+			continue_text.set_caption( "NEXT BLOCK [SPACEBAR]", true );
+		end;
+		block_pic.clear();
+		block_pic.add_part( block_message, 0, 0 );
+		block_pic.add_part( continue_box, 0, -0.80 * (1080 / 2) * starting_scale_factor );
+		block_pic.add_part( continue_text, 0, -0.80 * (1080 / 2) * starting_scale_factor );
 		end_block_trial.present()
 	else
 		# skip "End of Block" message
@@ -625,13 +615,15 @@ sub_save_to_network( local_path, filename, local_save );
 
 #########################################################
 
-block_message.set_caption( "Thank you! That is the end\nof the experiment!", true );
-block_prompt.set_caption( "Press [SPACEBAR] to close the program", true );
 
-### Change instructions for mobiles / touchscreens
+block_message.set_caption( "End of experiment!\n\nThank you!\n\nPlease notify the experimenter.", true );
 if parameter_manager.configuration_name() == "Mobile / Touchscreen" then
-	block_prompt.set_caption( "Touch the bottom-half of the screen to finish.", true );
+	continue_text.set_caption( "CLOSE PROGRAM", true );
 else
+	continue_text.set_caption( "CLOSE PROGRAM [SPACEBAR]", true );
 end;
-
+block_pic.clear();
+block_pic.add_part( block_message, 0, 0 );
+block_pic.add_part( continue_box, 0, -0.80 * (1080 / 2) * starting_scale_factor );
+block_pic.add_part( continue_text, 0, -0.80 * (1080 / 2) * starting_scale_factor );
 end_block_trial.present();
