@@ -13,6 +13,8 @@ default_formatted_text = true;
 
 begin;
 
+$exposure_duration = EXPARAM( "Trial Duration" : 1000 ); 
+
 array { 
 	bitmap { filename = "example_global_E.jpg"; preload = false; } bitmap_global_E;
 	bitmap { filename = "example_global_P.jpg"; preload = false; } bitmap_global_P;
@@ -26,8 +28,6 @@ array {
 	bitmap { filename = "example_local_U.jpg"; preload = false; } bitmap_local_U;
 	bitmap { filename = "example_local_S.jpg"; preload = false; } bitmap_local_S;
 } bitmap_examples;
-
-$exposure_duration = EXPARAM( "Trial Duration" : 1000 ); 
 
 trial {
 	trial_type = specific_response;
@@ -468,6 +468,7 @@ end;
 #instruct_trial.present();
 
 int max_blocks = parameter_manager.get_int( "Maximum Blocks", 1 );
+string is_practice_on = parameter_manager.get_string( "Practice Trials", "NO" );
 
 loop
 	int block = 1
@@ -480,9 +481,16 @@ begin
 	stimulus_set.shuffle();
 
 	loop
-		int i = 1
+		int i = 1;
+		int max_i;
+		if is_practice_on == "YES" then
+			max_i = 10;
+			block = 0;
+		else
+			max_i = stimulus_set.count()
+		end;
 	until
-		i > stimulus_set.count()
+		i > max_i
 	begin
 
 		trial_pic.clear();
@@ -574,7 +582,34 @@ begin
 		i = i + 1;
 	end;
 
-	if block != max_blocks then
+	if block == 0 then
+		block_message.set_caption( "Practice Over!\n\nAre you ready to begin the main trials,\nor do you want to complete another practice block?", true );
+		block_pic.clear();
+		block_pic.add_part( block_message, 0, 0 );
+		if parameter_manager.configuration_name() == "Mobile / Touchscreen" then
+			continue_previous.set_caption( "Practice more...", true );
+			continue_begin.set_caption( "Ready!", true );
+		else
+			continue_previous.set_caption( "Practice more... [Z]", true );
+			continue_begin.set_caption( "Ready! [/]", true );
+		end;
+		block_pic.add_part( continue_box, 0, -0.80 * (1080 / 2) * starting_scale_factor );
+		block_pic.add_part( continue_break, 0, -0.80 * (1080 / 2) * starting_scale_factor );
+		block_pic.add_part( continue_begin, (1920.0 / 4) * starting_scale_factor, -0.80 * (1080 / 2) * starting_scale_factor );
+		block_pic.add_part( continue_previous, (-1920.0 / 4) * starting_scale_factor, -0.80 * (1080 / 2) * starting_scale_factor );
+		
+		end_block_trial.set_terminator_buttons( { 1, 2, 4, 5 } );
+		end_block_trial.present();
+		if response_manager.last_response() == 1 || response_manager.last_response() == 4 then
+			# go to start of loop without increasing block counter to 1 (keep at 0)
+			continue;
+		elseif response_manager.last_response() == 2 || response_manager.last_response() == 5 then
+			# disable practice flag
+			is_practice_on = "OFF";
+			end_block_trial.set_terminator_button( 3 );
+		end;
+		
+	elseif block != max_blocks then
 		# not the last block
 		block_message.set_caption( "End of block!\n\nContinue when you are ready", true );
 		if parameter_manager.configuration_name() == "Mobile / Touchscreen" then
@@ -607,7 +642,7 @@ log.close();
 # Subroutine to copy logfile back to the default location
 # Requires the strings associated with:
 #	[1] the local file path
-#	[2] the file name to be entered as arguments
+#	[2] the file name
 #	[3] if save operation is to be performed ("YES"/"NO") 
 
 include "sub_force_local_save.pcl";

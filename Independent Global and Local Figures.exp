@@ -154,18 +154,25 @@
 </dat>
 <id>4</id>
 </val>
+<val>
+<dat>
+<val>YES</val>
+</dat>
+<id>5</id>
+</val>
 </sd>
 <sid>-1</sid>
 </ss>
 </dcfg>
 </cfg>
-<cs>0</cs>
+<cs>-1</cs>
 <dl>
 <grps>
 <grp>
 <gn>Startup Parameters</gn>
 <pl>
 <pid>0</pid>
+<pid>5</pid>
 </pl>
 </grp>
 <grp>
@@ -252,6 +259,20 @@ Useful when running the experiment from a network location (improves stability).
 </set>
 <temp>0</temp>
 <type>int</type>
+<vis>1</vis>
+</set>
+</parm>
+<parm>
+<id>5</id>
+<set>
+<desc>Run 10 practice trials before the main blocks. Participant can repeat practice block as much as desired. Practice trials will Block 0 in the output.</desc>
+<edit>1</edit>
+<name>Practice Trials</name>
+<set>
+<rest>"YES","NO"</rest>
+</set>
+<temp>0</temp>
+<type>string</type>
 <vis>1</vis>
 </set>
 </parm>
