@@ -49,7 +49,7 @@
 <filename>C:\Users\Michael\OneDrive\University\A. Current Projects\New Hierarchical Figures\sub_force_local_save.pcl</filename>
 </efs>
 <exclusive_mouse>1</exclusive_mouse>
-<exp_version>0.1.0</exp_version>
+<exp_version>1.0.0</exp_version>
 <exparam>
 <man>
 <cfg>
@@ -199,7 +199,7 @@ Useful when running the experiment from a network location (improves stability).
 <set>
 <rest>"YES","NO"</rest>
 </set>
-<temp>1</temp>
+<temp>0</temp>
 <type>string</type>
 <vis>1</vis>
 </set>
