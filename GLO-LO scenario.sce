@@ -396,7 +396,7 @@ log.print( date_time() );
 log.print("\n");
 log.print( "Scale factor: " + string( scale_factor ) );
 log.print("\n");
-log.print( "Exposure time: " + string( 1000 + parameter_manager.get_int( "Trial Duration" ) ) );
+log.print( "Exposure time: " + string( parameter_manager.get_int( "Trial Duration" ) ) );
 log.print("\n\n");
 
 # Logfile Table
