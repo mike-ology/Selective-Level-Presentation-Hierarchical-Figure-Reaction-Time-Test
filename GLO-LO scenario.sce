@@ -7,7 +7,7 @@ no_logfile = true; # default logfile not created
 response_matching = legacy_matching;
 default_background_color = 0, 0, 0;
 default_font = "Arial";
-default_font_size = 24;
+default_font_size = 36;
 default_text_color = 255, 255, 255;
 default_formatted_text = true;
 
@@ -382,9 +382,14 @@ output_file log = new output_file;
 
 if local_save == "YES" then
 	create_directory( local_path );
-	log.open_append( local_path + filename ); 
+	if !log.open( local_path + filename, log.APPEND, false ) then
+		 log.open( filename )
+	end;
 else
-	log.open_append( filename ); 
+	if !log.open(  local_path + filename, log.APPEND, false ) then
+		 log.open( filename )
+	end;
+
 end;
 
 # Logfile Header	

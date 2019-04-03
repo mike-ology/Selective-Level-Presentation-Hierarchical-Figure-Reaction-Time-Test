@@ -66,7 +66,7 @@
 <sd>
 <val>
 <dat>
-<val>YES</val>
+<val>NO</val>
 </dat>
 <id>0</id>
 </val>
@@ -193,7 +193,9 @@
 <set>
 <desc>Initially saves logfile data to "C:/Presentation_Output/" during the scenario and then creates an identical logfile in the default logfile location at the end of the scenario.
 
-Useful when running the experiment from a network location (improves stability).</desc>
+Useful when running the experiment from a network location (improves stability).
+
+Must be set to "NO" when running on mobile (due to differing logfile locations)</desc>
 <edit>1</edit>
 <name>Use Local Save</name>
 <set>
@@ -323,7 +325,7 @@ Useful when running the experiment from a network location (improves stability).
 <lnb>2</lnb>
 <lno>4</lno>
 <log>
-<append_counter>0</append_counter>
+<append_counter>1</append_counter>
 <delimiter>9</delimiter>
 <general_list>1</general_list>
 <its>0</its>
@@ -403,6 +405,48 @@ Useful when running the experiment from a network location (improves stability).
 <name>Keyboard</name>
 </device>
 <device>
+<abs_axis>
+<dead_zone>0</dead_zone>
+<max>1000</max>
+<min>-1000</min>
+<name>X-axis</name>
+<saturation>1</saturation>
+</abs_axis>
+<abs_axis>
+<dead_zone>0</dead_zone>
+<max>1000</max>
+<min>-1000</min>
+<name>Y-axis</name>
+<saturation>1</saturation>
+</abs_axis>
+<axis>
+<max>1000</max>
+<min>-1000</min>
+<name>X-axis</name>
+<restricted>1</restricted>
+<scale>1</scale>
+</axis>
+<axis>
+<max>1000</max>
+<min>-1000</min>
+<name>Y-axis</name>
+<restricted>1</restricted>
+<scale>1</scale>
+</axis>
+<axis>
+<max>1000</max>
+<min>-1000</min>
+<name>Wheel</name>
+<restricted>1</restricted>
+<scale>1</scale>
+</axis>
+<device_type>2</device_type>
+<dx_device_type>0</dx_device_type>
+<max_raw_pos>65535</max_raw_pos>
+<min_raw_pos>0</min_raw_pos>
+<name>HID-compliant mouse</name>
+</device>
+<device>
 <device_type>3</device_type>
 <dx_device_type>0</dx_device_type>
 <name>HID Keyboard Device</name>
@@ -453,48 +497,6 @@ Useful when running the experiment from a network location (improves stability).
 <max_raw_pos>65535</max_raw_pos>
 <min_raw_pos>0</min_raw_pos>
 <name>Synaptics HID ClickPad</name>
-</device>
-<device>
-<abs_axis>
-<dead_zone>0</dead_zone>
-<max>1000</max>
-<min>-1000</min>
-<name>X-axis</name>
-<saturation>1</saturation>
-</abs_axis>
-<abs_axis>
-<dead_zone>0</dead_zone>
-<max>1000</max>
-<min>-1000</min>
-<name>Y-axis</name>
-<saturation>1</saturation>
-</abs_axis>
-<axis>
-<max>1000</max>
-<min>-1000</min>
-<name>X-axis</name>
-<restricted>1</restricted>
-<scale>1</scale>
-</axis>
-<axis>
-<max>1000</max>
-<min>-1000</min>
-<name>Y-axis</name>
-<restricted>1</restricted>
-<scale>1</scale>
-</axis>
-<axis>
-<max>1000</max>
-<min>-1000</min>
-<name>Wheel</name>
-<restricted>1</restricted>
-<scale>1</scale>
-</axis>
-<device_type>2</device_type>
-<dx_device_type>0</dx_device_type>
-<max_raw_pos>65535</max_raw_pos>
-<min_raw_pos>0</min_raw_pos>
-<name>HID-compliant mouse</name>
 </device>
 <device>
 <abs_axis>
