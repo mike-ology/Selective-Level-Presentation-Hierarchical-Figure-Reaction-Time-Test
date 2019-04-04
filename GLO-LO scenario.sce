@@ -11,6 +11,10 @@ default_font_size = 36;
 default_text_color = 255, 255, 255;
 default_formatted_text = true;
 
+screen_width = 1920;
+screen_height = 1080;
+screen_bit_depth = 32;
+
 begin;
 
 $exposure_duration = EXPARAM( "Trial Duration" : 1000 ); 

@@ -29,11 +29,11 @@
 <depchg>1</depchg>
 <discard_windows_messages>0</discard_windows_messages>
 <display_status_window>1</display_status_window>
-<dmd>0</dmd>
-<dmh>0</dmh>
-<dmr>1</dmr>
-<dmrf>1</dmrf>
-<dmw>0</dmw>
+<dmd>32</dmd>
+<dmh>1080</dmh>
+<dmr>60</dmr>
+<dmrf>59.9400597979798</dmrf>
+<dmw>1920</dmw>
 <docs>
 <args></args>
 <exfl></exfl>
@@ -57,7 +57,7 @@
 <cfg>
 <en>0</en>
 <guid>{2EB87493-79DB-430C-A97A-A68FAA2CA64D}</guid>
-<name>Debugging</name>
+<name>Debugging (one short block)</name>
 <r>
 <plat>1</plat>
 <rd>1</rd>
@@ -95,6 +95,12 @@
 </dat>
 <id>6</id>
 </val>
+<val>
+<dat>
+<val>YES</val>
+</dat>
+<id>5</id>
+</val>
 </sd>
 <sid>-1</sid>
 </ss>
@@ -104,8 +110,8 @@
 <guid>{CF08BC8C-EFA6-4174-A04A-9B02EAF7083A}</guid>
 <name>Mobile / Touchscreen</name>
 <r>
-<plat>2147483647</plat>
-<rd>0</rd>
+<plat>6</plat>
+<rd>1</rd>
 <ss>0</ss>
 </r>
 <ss>
@@ -163,7 +169,7 @@
 </val>
 <val>
 <dat>
-<val>NO</val>
+<val>YES</val>
 </dat>
 <id>5</id>
 </val>
@@ -387,7 +393,7 @@ Must be set to "NO" when running on mobile (due to differing logfile locations)<
 <oports></oports>
 <out_encrypt_key></out_encrypt_key>
 <pi_list></pi_list>
-<plat>2147483647</plat>
+<plat>1</plat>
 <port_devices></port_devices>
 <rdl>
 <device>
@@ -1154,17 +1160,17 @@ Must be set to "NO" when running on mobile (due to differing logfile locations)<
 <offset>57</offset>
 </abd>
 <abd>
-<device_type>5</device_type>
-<dx_device_type>0</dx_device_type>
-<ibn>Left Button</ibn>
-<ibn>Right Button</ibn>
-<idn>pointing device</idn>
+<device_type>2</device_type>
+<dx_device_type>18</dx_device_type>
+<ibn>Button 0</ibn>
+<ibn>Button 1</ibn>
+<idn>Mouse</idn>
 <index>3</index>
 <index>4</index>
 <label></label>
 <label></label>
-<offset>8</offset>
-<offset>10</offset>
+<offset>12</offset>
+<offset>13</offset>
 </abd>
 </sett>
 </conf>
@@ -1189,17 +1195,17 @@ Must be set to "NO" when running on mobile (due to differing logfile locations)<
 <offset>57</offset>
 </abd>
 <abd>
-<device_type>5</device_type>
-<dx_device_type>0</dx_device_type>
-<ibn>Left Button</ibn>
-<ibn>Right Button</ibn>
-<idn>pointing device</idn>
+<device_type>2</device_type>
+<dx_device_type>18</dx_device_type>
+<ibn>Button 0</ibn>
+<ibn>Button 1</ibn>
+<idn>Mouse</idn>
 <index>3</index>
 <index>4</index>
 <label></label>
 <label></label>
-<offset>8</offset>
-<offset>10</offset>
+<offset>12</offset>
+<offset>13</offset>
 </abd>
 </sett>
 </conf>
