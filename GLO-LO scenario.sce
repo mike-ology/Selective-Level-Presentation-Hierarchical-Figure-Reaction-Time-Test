@@ -11,9 +11,9 @@ default_font_size = 36;
 default_text_color = 255, 255, 255;
 default_formatted_text = true;
 
-screen_width = 1920;
-screen_height = 1080;
-screen_bit_depth = 32;
+#screen_width = 1920;
+#screen_height = 1080;
+#screen_bit_depth = 32;
 
 begin;
 
@@ -616,14 +616,20 @@ log.close();
 #	[2] the file name
 #	[3] if save operation is to be performed ("YES"/"NO") 
 
+bool copy_success = true;
 include "sub_force_local_save.pcl";
 sub_save_to_network( local_path, filename, use_local_save );	
 
-#########################################################
-
 create_new_prompt( 1 );
 
-prompt_message.set_caption( "End of experiment!\n\nThank you!\n\nPlease notify the experimenter.", true );
+if copy_success == true then
+	prompt_message.set_caption( "End of experiment! Thank you!\n\nPlease notify the experimenter.\n\n<font color = '0,255,0'>LOGFILE WAS SAVED TO DEFAULT LOCATION</font>", true )
+elseif copy_success == false then
+	prompt_message.set_caption( "End of experiment! Thank you!\n\nPlease notify the experimenter.\n\n<font color = '255,0,0'>LOGFILE WAS SAVED TO:\n</font>" + local_path, true );
+else
+end;
+
+#########################################################
 
 if parameter_manager.configuration_name() == "Mobile / Touchscreen" then
 	mid_button_text.set_caption( "CLOSE PROGRAM", true );
@@ -634,4 +640,3 @@ else
 end;
 
 prompt_trial.present();
-

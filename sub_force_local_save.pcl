@@ -2,8 +2,9 @@
 
 ### LOCAL FILE >> NETWORK FILE ###
 
+
 sub
-	sub_save_to_network( string path, string name, string save )
+	bool sub_save_to_network( string path, string name, string save )
 begin
 
 	if save == "YES" then
@@ -34,7 +35,12 @@ begin
 		# Copy local version of logfile to network location
 
 		input_file local_input = new input_file();
-		local_input.open( path + name );
+		
+		if local_input.open( path + name, false ) == false then
+			copy_success = false;			
+			return copy_success;
+		else
+		end;
 
 		output_file final_output = new output_file();
 		final_output.open_append( name );
@@ -59,4 +65,6 @@ begin
 		
 	end;
 
+	copy_success = true;
+	return copy_success;
 end;
