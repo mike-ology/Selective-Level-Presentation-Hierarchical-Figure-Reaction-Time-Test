@@ -29,11 +29,11 @@
 <depchg>1</depchg>
 <discard_windows_messages>0</discard_windows_messages>
 <display_status_window>1</display_status_window>
-<dmd>32</dmd>
-<dmh>1080</dmh>
-<dmr>60</dmr>
-<dmrf>59.9400597979798</dmrf>
-<dmw>1920</dmw>
+<dmd>0</dmd>
+<dmh>0</dmh>
+<dmr>1</dmr>
+<dmrf>1</dmrf>
+<dmw>0</dmw>
 <docs>
 <args></args>
 <exfl></exfl>
@@ -393,7 +393,7 @@ Must be set to "NO" when running on mobile (due to differing logfile locations)<
 <oports></oports>
 <out_encrypt_key></out_encrypt_key>
 <pi_list></pi_list>
-<plat>1</plat>
+<plat>2147483647</plat>
 <port_devices></port_devices>
 <rdl>
 <device>

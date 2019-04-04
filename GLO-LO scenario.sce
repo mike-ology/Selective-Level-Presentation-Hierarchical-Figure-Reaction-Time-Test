@@ -538,7 +538,7 @@ begin
 		array <string> chara[5] = {"E", "P", "H", "U", "S"};
 
 		# Logfile Output
-		if parameter_manager.get_string( "Log Practice Trials", "YES" ) == "YES" then
+		if parameter_manager.get_string( "Log Practice Trials", "YES" ) == "YES" || block > 0 then
 			log.print( block ); log.print("\t");
 			log.print( i ); log.print("\t");
 			log.print( type[stimulus_set[i][1]] ); log.print("\t");
