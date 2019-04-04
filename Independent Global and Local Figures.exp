@@ -47,6 +47,7 @@
 <filename>C:\Users\Michael\OneDrive\University\A. Current Projects\New Hierarchical Figures\GLO-LO scenario.sce</filename>
 <filename>C:\Users\Michael\OneDrive\University\A. Current Projects\New Hierarchical Figures\sub_screen_scaling.pcl</filename>
 <filename>C:\Users\Michael\OneDrive\University\A. Current Projects\New Hierarchical Figures\sub_force_local_save.pcl</filename>
+<filename>C:\Users\Michael\OneDrive\University\A. Current Projects\New Hierarchical Figures\sub_generate_prompt.pcl</filename>
 </efs>
 <exclusive_mouse>1</exclusive_mouse>
 <exp_version>1.0.0</exp_version>
@@ -87,6 +88,12 @@
 <val>1</val>
 </dat>
 <id>3</id>
+</val>
+<val>
+<dat>
+<val>YES</val>
+</dat>
+<id>6</id>
 </val>
 </sd>
 <sid>-1</sid>
@@ -156,9 +163,15 @@
 </val>
 <val>
 <dat>
-<val>YES</val>
+<val>NO</val>
 </dat>
 <id>5</id>
+</val>
+<val>
+<dat>
+<val>NO</val>
+</dat>
+<id>6</id>
 </val>
 </sd>
 <sid>-1</sid>
@@ -169,10 +182,10 @@
 <dl>
 <grps>
 <grp>
-<gn>Startup Parameters</gn>
+<gn>Practice Trial Parameters</gn>
 <pl>
-<pid>0</pid>
 <pid>5</pid>
+<pid>6</pid>
 </pl>
 </grp>
 <grp>
@@ -182,6 +195,12 @@
 <pid>3</pid>
 <pid>1</pid>
 <pid>2</pid>
+</pl>
+</grp>
+<grp>
+<gn>Network Saving</gn>
+<pl>
+<pid>0</pid>
 </pl>
 </grp>
 </grps>
@@ -270,6 +289,20 @@ Must be set to "NO" when running on mobile (due to differing logfile locations)<
 <desc>Run 10 practice trials before the main blocks. Participant can repeat practice block as much as desired. Practice trials will Block 0 in the output.</desc>
 <edit>1</edit>
 <name>Practice Trials</name>
+<set>
+<rest>"YES","NO"</rest>
+</set>
+<temp>0</temp>
+<type>string</type>
+<vis>1</vis>
+</set>
+</parm>
+<parm>
+<id>6</id>
+<set>
+<desc>Should practice trial data be included in the output?</desc>
+<edit>1</edit>
+<name>Log Practice Trials</name>
 <set>
 <rest>"YES","NO"</rest>
 </set>
@@ -722,7 +755,7 @@ Must be set to "NO" when running on mobile (due to differing logfile locations)<
 <used>1</used>
 <value>-0.3</value>
 </min_y>
-<name>Left Down (half)</name>
+<name>Left Down (except bottom)</name>
 <primary></primary>
 <to>
 <states>down;</states>
@@ -762,7 +795,7 @@ Must be set to "NO" when running on mobile (due to differing logfile locations)<
 <used>1</used>
 <value>-0.3</value>
 </min_y>
-<name>Right Down (half)</name>
+<name>Right Down (except bottom)</name>
 <primary></primary>
 <to>
 <states>down;</states>
@@ -929,6 +962,126 @@ Must be set to "NO" when running on mobile (due to differing logfile locations)<
 <type>5</type>
 </to>
 </but>
+<but>
+<from>
+<states>down;</states>
+<type>2</type>
+</from>
+<max_x>
+<inc>1</inc>
+<origin>3</origin>
+<units>3</units>
+<used>1</used>
+<value>-0.67</value>
+</max_x>
+<max_y>
+<inc>1</inc>
+<origin>2</origin>
+<units>3</units>
+<used>1</used>
+<value>-0.3</value>
+</max_y>
+<min_x>
+<inc>1</inc>
+<origin>2</origin>
+<units>2</units>
+<used>0</used>
+<value>0</value>
+</min_x>
+<min_y>
+<inc>1</inc>
+<origin>2</origin>
+<units>2</units>
+<used>0</used>
+<value>0</value>
+</min_y>
+<name>Left Button</name>
+<primary></primary>
+<to>
+<states>down;</states>
+<type>5</type>
+</to>
+</but>
+<but>
+<from>
+<states>down;</states>
+<type>2</type>
+</from>
+<max_x>
+<inc>1</inc>
+<origin>3</origin>
+<units>3</units>
+<used>1</used>
+<value>-0.33</value>
+</max_x>
+<max_y>
+<inc>1</inc>
+<origin>2</origin>
+<units>3</units>
+<used>1</used>
+<value>-0.3</value>
+</max_y>
+<min_x>
+<inc>1</inc>
+<origin>1</origin>
+<units>3</units>
+<used>1</used>
+<value>0.33</value>
+</min_x>
+<min_y>
+<inc>1</inc>
+<origin>2</origin>
+<units>2</units>
+<used>0</used>
+<value>0</value>
+</min_y>
+<name>Centre Button</name>
+<primary></primary>
+<to>
+<states>down;</states>
+<type>5</type>
+</to>
+</but>
+<but>
+<from>
+<states>down;</states>
+<type>2</type>
+</from>
+<max_x>
+<inc>1</inc>
+<origin>2</origin>
+<units>2</units>
+<used>0</used>
+<value>0</value>
+</max_x>
+<max_y>
+<inc>1</inc>
+<origin>2</origin>
+<units>3</units>
+<used>1</used>
+<value>-0.3</value>
+</max_y>
+<min_x>
+<inc>1</inc>
+<origin>1</origin>
+<units>3</units>
+<used>1</used>
+<value>0.67</value>
+</min_x>
+<min_y>
+<inc>1</inc>
+<origin>2</origin>
+<units>2</units>
+<used>0</used>
+<value>0</value>
+</min_y>
+<name>Right Button</name>
+<primary></primary>
+<to>
+<states>down;</states>
+<type>5</type>
+</to>
+</but>
 </buts>
 <device_type>5</device_type>
 <dx_device_type>0</dx_device_type>
@@ -958,9 +1111,9 @@ Must be set to "NO" when running on mobile (due to differing logfile locations)<
 <dx_device_type>0</dx_device_type>
 <ibn>Left Down</ibn>
 <ibn>Right Down</ibn>
-<ibn>Bottom Down</ibn>
-<ibn>Left Down (half)</ibn>
-<ibn>Right Down (half)</ibn>
+<ibn>Centre Button</ibn>
+<ibn>Left Button</ibn>
+<ibn>Right Button</ibn>
 <idn>pointing device</idn>
 <index>0</index>
 <index>1</index>
@@ -974,9 +1127,9 @@ Must be set to "NO" when running on mobile (due to differing logfile locations)<
 <label></label>
 <offset>6</offset>
 <offset>7</offset>
-<offset>5</offset>
-<offset>2</offset>
-<offset>3</offset>
+<offset>9</offset>
+<offset>8</offset>
+<offset>10</offset>
 </idv>
 </sett>
 </conf>
@@ -1003,15 +1156,15 @@ Must be set to "NO" when running on mobile (due to differing logfile locations)<
 <abd>
 <device_type>5</device_type>
 <dx_device_type>0</dx_device_type>
-<ibn>Left Down (half)</ibn>
-<ibn>Right Down (half)</ibn>
+<ibn>Left Button</ibn>
+<ibn>Right Button</ibn>
 <idn>pointing device</idn>
 <index>3</index>
 <index>4</index>
 <label></label>
 <label></label>
-<offset>2</offset>
-<offset>3</offset>
+<offset>8</offset>
+<offset>10</offset>
 </abd>
 </sett>
 </conf>
@@ -1038,15 +1191,15 @@ Must be set to "NO" when running on mobile (due to differing logfile locations)<
 <abd>
 <device_type>5</device_type>
 <dx_device_type>0</dx_device_type>
-<ibn>Left Down (half)</ibn>
-<ibn>Right Down (half)</ibn>
+<ibn>Left Button</ibn>
+<ibn>Right Button</ibn>
 <idn>pointing device</idn>
 <index>3</index>
 <index>4</index>
 <label></label>
 <label></label>
-<offset>2</offset>
-<offset>3</offset>
+<offset>8</offset>
+<offset>10</offset>
 </abd>
 </sett>
 </conf>

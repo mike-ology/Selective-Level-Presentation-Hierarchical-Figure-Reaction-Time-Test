@@ -1,0 +1,77 @@
+# Generate stimuli to be used on prompt screens
+
+box left_box = new box( 1080.0/5 * starting_scale_factor, ( 1920.0 / 3.0 ) * starting_scale_factor ,  rgb_color(0,255,0) );
+box mid_box = new box( 1080.0/5 * starting_scale_factor, ( 1920.0 / 3.0 ) * starting_scale_factor ,  rgb_color(0,255,0) );
+box right_box = new box( 1080.0/5 * starting_scale_factor, ( 1920.0 / 3.0 ) * starting_scale_factor ,  rgb_color(0,255,0) );
+
+text left_button_text = new text();
+text mid_button_text = new text();
+text right_button_text = new text();
+
+text prompt_message = new text();
+
+left_button_text.set_background_color( 0, 255, 0, 128 );
+left_button_text.set_font_color( 0, 0, 0 );
+left_button_text.set_font_size( 48 );
+mid_button_text.set_background_color( 0, 255, 0, 128 );
+mid_button_text.set_font_color( 0, 0, 0 );
+mid_button_text.set_font_size( 48 );
+right_button_text.set_background_color( 0, 255, 0, 128 );
+right_button_text.set_font_color( 0, 0, 0 );
+right_button_text.set_font_size( 48 );
+
+line_graphic button_divider = new line_graphic();
+button_divider.add_line( 0, 1080.0/10 * starting_scale_factor, 0, -1080.0/10 * starting_scale_factor );
+button_divider.set_line_width( 10.0 );
+button_divider.set_line_color( 0, 0, 0, 255 );
+button_divider.redraw();
+
+# subroutine that resets prompt template
+# 1 = large button
+# 2 = two side buttons
+# 3 = three buttons
+
+sub create_new_prompt( int variant )
+begin
+
+	prompt_pic.clear();
+	
+	prompt_pic.add_part( prompt_message, 0, 0 );
+	
+	left_button_text.set_caption( "BACK", true );
+	mid_button_text.set_caption( "OK", true );
+	right_button_text.set_caption( "NEXT", true );
+
+	if variant == 3 then
+		prompt_pic.add_part( left_box, ( -1920.0 / 2.0 ) * ( 2.0 / 3.0 ) * starting_scale_factor, ( -1080.0 / 2.0 ) * ( 4.0 / 5.0 ) * starting_scale_factor ) ;
+		prompt_pic.add_part( mid_box, 0, ( -1080.0 / 2.0 ) * ( 4.0 / 5.0 ) * starting_scale_factor ) ;
+		prompt_pic.add_part( right_box, ( 1920.0 / 2.0 ) * ( 2.0 / 3.0 ) * starting_scale_factor, ( -1080.0 / 2.0 ) * ( 4.0 / 5.0 ) * starting_scale_factor ) ;
+
+		prompt_pic.add_part( left_button_text, ( -1920.0 / 2.0 ) * ( 2.0 / 3.0 ) * starting_scale_factor, ( -1080.0 / 2.0 ) * ( 4.0 / 5.0 ) * starting_scale_factor ) ;
+		prompt_pic.add_part( mid_button_text, 0.0, ( -1080.0 / 2.0 ) * ( 4.0 / 5.0 ) * starting_scale_factor ) ;
+		prompt_pic.add_part( right_button_text, ( 1920.0 / 2.0 ) * ( 2.0 / 3.0 ) * starting_scale_factor, ( -1080.0 / 2.0 ) * ( 4.0 / 5.0 ) * starting_scale_factor ) ;
+		prompt_pic.set_part_on_top( 5, true );
+		prompt_pic.set_part_on_top( 6, true );
+		prompt_pic.set_part_on_top( 7, true );
+		prompt_pic.add_part( button_divider, ( -1920.0 / 2.0 ) * ( 1.0 / 3.0 ) * starting_scale_factor, ( -1080.0 / 2.0 ) * ( 4.0 / 5.0 ) * starting_scale_factor ) ;
+		prompt_pic.add_part( button_divider, ( 1920.0 / 2.0 ) * ( 1.0 / 3.0 ) * starting_scale_factor, ( -1080.0 / 2.0 ) * ( 4.0 / 5.0 ) * starting_scale_factor ) ;
+		
+	elseif variant == 2 then
+		prompt_pic.add_part( left_box, ( -1920.0 / 2.0 ) * ( 2.0 / 3.0 ) * starting_scale_factor, ( -1080.0 / 2.0 ) * ( 4.0 / 5.0 ) * starting_scale_factor ) ;
+		prompt_pic.add_part( right_box, ( 1920.0 / 2.0 ) * ( 2.0 / 3.0 ) * starting_scale_factor, ( -1080.0 / 2.0 ) * ( 4.0 / 5.0 ) * starting_scale_factor ) ;
+
+		prompt_pic.add_part( left_button_text, ( -1920.0 / 2.0 ) * ( 2.0 / 3.0 ) * starting_scale_factor, ( -1080.0 / 2.0 ) * ( 4.0 / 5.0 ) * starting_scale_factor ) ;
+		prompt_pic.add_part( right_button_text, ( 1920.0 / 2.0 ) * ( 2.0 / 3.0 ) * starting_scale_factor, ( -1080.0 / 2.0 ) * ( 4.0 / 5.0 ) * starting_scale_factor ) ;
+		prompt_pic.set_part_on_top( 4, true );
+		prompt_pic.set_part_on_top( 5, true );
+
+	elseif variant == 1 then
+		prompt_pic.add_part( left_box, ( -1920.0 / 2.0 ) * ( 2.0 / 3.0 ) * starting_scale_factor, ( -1080.0 / 2.0 ) * ( 4.0 / 5.0 ) * starting_scale_factor ) ;
+		prompt_pic.add_part( mid_box, 0, ( -1080.0 / 2.0 ) * ( 4.0 / 5.0 ) * starting_scale_factor ) ;
+		prompt_pic.add_part( right_box, ( 1920.0 / 2.0 ) * ( 2.0 / 3.0 ) * starting_scale_factor, ( -1080.0 / 2.0 ) * ( 4.0 / 5.0 ) * starting_scale_factor ) ;
+
+		prompt_pic.add_part( mid_button_text, 0.0, ( -1080.0 / 2.0 ) * ( 4.0 / 5.0 ) * starting_scale_factor ) ;
+		prompt_pic.set_part_on_top( 5, true );
+
+	end;
+end;

@@ -31,11 +31,13 @@ array {
 
 trial {
 	trial_type = specific_response;
-	terminator_button = 1, 2, 4, 5;
+	terminator_button = 1, 2;
+	all_responses = false;
 	trial_duration = forever;
 	stimulus_event {
 		picture {
 		}instruct_pic;
+		response_active = true;
 	}instruct_event;
 }instruct_trial;
 
@@ -69,14 +71,6 @@ trial {
 
 }main_trial;
 
-trial {
-	trial_type = specific_response;
-	terminator_button = 3;
-	trial_duration = forever;
-	picture {
-	}block_pic;
-}end_block_trial;
-
 picture { 
 	text { 
 		caption = "FEEDBACK"; 
@@ -86,6 +80,13 @@ picture {
 
 text { caption = "PLACEHOLDER"; } block_message;
 
+trial {
+	trial_type = specific_response;
+	terminator_button = 1, 2, 3, 4, 5;
+	trial_duration = forever;
+	picture {} prompt_pic;
+}prompt_trial;
+
 begin_pcl;
 
 #######################
@@ -93,57 +94,19 @@ begin_pcl;
 # Initial Setup
 
 double scale_factor = 1.0;
-double x_starting_scale_factor = round( display_device.width() / 1920.0, 1 );
-double y_starting_scale_factor = round( display_device.height() / 1080.0, 1 );
-double starting_scale_factor;
-if x_starting_scale_factor  < y_starting_scale_factor then
-	starting_scale_factor = x_starting_scale_factor
-else
-	starting_scale_factor = y_starting_scale_factor
-end;
+double starting_scale_factor = 1.0;
 
+include "sub_generate_prompt.pcl";
 
-#######################
-
-# Create "CONTINUE" prompt for use on touchscreens
-# Note: The scaling on this button can not be changed so as to match response settings! 
-
-box continue_box = new box( 1080.0/5 * starting_scale_factor, 1920.0 * starting_scale_factor,  rgb_color(0,255,0) );
-line_graphic continue_break = new line_graphic();
-continue_break.add_line( 0, 1080.0/10 * starting_scale_factor, 0, -1080.0/10 * starting_scale_factor );
-continue_break.set_line_width( 10.0 );
-continue_break.set_line_color( 0, 0, 0, 255 );
-continue_break.redraw();
-
-text continue_text = new text;
-text continue_next = new text;
-text continue_previous = new text;
-text continue_begin = new text;
-
-array <text> continue_prompts [0];
-continue_prompts.add( continue_text );
-continue_prompts.add( continue_next );
-continue_prompts.add( continue_previous );
-continue_prompts.add( continue_begin );
-
-loop int i = 1 until i > continue_prompts.count() begin
-	continue_prompts[i].set_font_color( 0, 0, 0 );
-	continue_prompts[i].set_background_color( 0, 255, 0, 128 );
-	continue_prompts[i].set_font_size( 48.0 );
-	i = i + 1;
-end;
-
-continue_text.set_caption( "CONTINUE", true );
-
-# Example coordinates for continue prompt to match response settings
-# picture_object.add_part( continue_object, 0, -0.80 * (1080 / 2) * starting_scale_factor );
+include "sub_screen_scaling.pcl";
+screen_check();
 
 #######################
 
 # Adjust stimulus dimensions if not using 1920 x 1080 device via subroutine
 
-include "sub_screen_scaling.pcl";
-screen_check();
+#include "sub_screen_scaling.pcl";
+#screen_check();
 
 #######################
 
@@ -245,150 +208,145 @@ instruct_array.add( instruct2 );
 instruct_array.add( instruct3 );
 instruct_array.add( instruct4 );
 
-if parameter_manager.configuration_name() == "Mobile / Touchscreen" then
-	# touchscreen instructions
-
-	text page1_text = new text();
-	page1_text.set_caption( "In this task, you will view various images of letters\nand respond to certain letters (but not others).", true );
-	continue_text.set_caption( "NEXT PAGE", true );
-	instruct1.add_part( page1_text, 0, 0 );
-	instruct1.add_part( continue_box, 0, -0.80 * (1080 / 2) * starting_scale_factor );
-	instruct1.add_part( continue_text, 0, -0.80 * (1080 / 2) * starting_scale_factor );
-
-	text page2_text = new text();
-	page2_text.set_caption( "You will need to look for the letter E and P (see examples above).\nThey can appear at either the smaller (local level) or larger (global) level.\n\nTap anywhere on the left-side of the screen if the letter E is present.\nTap anywhere on the right-side of the screen if the letter P is present.", true );
-	continue_next.set_caption( "NEXT PAGE", true );
-	continue_previous.set_caption( "PREVIOUS PAGE", true );
-	instruct2.add_part( bitmap_global_E, -300 * scale_factor, 200 * scale_factor );
-	instruct2.add_part( bitmap_global_P, -100 * scale_factor, 200 * scale_factor );
-	instruct2.add_part( bitmap_local_E, 100 * scale_factor, 200 * scale_factor );
-	instruct2.add_part( bitmap_local_P, 300 * scale_factor, 200 * scale_factor );
-	instruct2.add_part( page2_text, 0 * scale_factor, -100 * scale_factor );
-	instruct2.add_part( continue_box, 0, -0.80 * (1080 / 2) * starting_scale_factor );
-	instruct2.add_part( continue_break, 0, -0.80 * (1080 / 2) * starting_scale_factor );
-	instruct2.add_part( continue_next, (1920.0 / 4) * starting_scale_factor, -0.80 * (1080 / 2) * starting_scale_factor );
-	instruct2.add_part( continue_previous, (-1920.0 / 4) * starting_scale_factor, -0.80 * (1080 / 2) * starting_scale_factor );
-	
-	text page3_text = new text();
-	page3_text.set_caption( "Other letters will also appear (see examples above).\n\nDo NOT tap anywhere if these appear.\nOnly respond if an E or P is present.", true );
-	continue_next.set_caption( "NEXT PAGE", true );
-	continue_previous.set_caption( "PREVIOUS PAGE", true );
-	instruct3.add_part( bitmap_global_H, -500 * scale_factor, 200 * scale_factor );
-	instruct3.add_part( bitmap_global_U, -300 * scale_factor, 200 * scale_factor );
-	instruct3.add_part( bitmap_global_S, -100 * scale_factor, 200 * scale_factor );
-	instruct3.add_part( bitmap_local_H, 100 * scale_factor, 200 * scale_factor );
-	instruct3.add_part( bitmap_local_U, 300 * scale_factor, 200 * scale_factor );
-	instruct3.add_part( bitmap_local_S, 500 * scale_factor, 200 * scale_factor );
-	instruct3.add_part( page3_text, 0 * scale_factor, -100 * scale_factor );
-	instruct3.add_part( continue_box, 0, -0.80 * (1080 / 2) * starting_scale_factor );
-	instruct3.add_part( continue_break, 0, -0.80 * (1080 / 2) * starting_scale_factor );
-	instruct3.add_part( continue_next, (1920.0 / 4) * starting_scale_factor, -0.80 * (1080 / 2) * starting_scale_factor );
-	instruct3.add_part( continue_previous, (-1920.0 / 4) * starting_scale_factor, -0.80 * (1080 / 2) * starting_scale_factor );
-	
-	text page4_text = new text();
-	page4_text.set_caption( "Try to make your responses (when required) as quickly as possible.\n\nThere will be opportunities for short breaks though-out the task\n\nAre you read to start some practice trials?", true );
-	continue_begin.set_caption( "START PRACTICE", true );
-	continue_previous.set_caption( "PREVIOUS PAGE", true );
-	instruct4.add_part( page4_text, 0 * scale_factor, 0 * scale_factor );
-	instruct4.add_part( continue_box, 0, -0.80 * (1080 / 2) * starting_scale_factor );
-	instruct4.add_part( continue_break, 0, -0.80 * (1080 / 2) * starting_scale_factor );
-	instruct4.add_part( continue_begin, (1920.0 / 4) * starting_scale_factor, -0.80 * (1080 / 2) * starting_scale_factor );
-	instruct4.add_part( continue_previous, (-1920.0 / 4) * starting_scale_factor, -0.80 * (1080 / 2) * starting_scale_factor );
-	
-else
-	# not a touchscreen
-	
-	text page1_text = new text();
-	page1_text.set_caption( "In this task, you will view various images of letters\nand respond to certain letters (but not others).", true );
-	continue_text.set_caption( "NEXT PAGE [/]", true );
-	instruct1.add_part( page1_text, 0 * scale_factor, 0 * scale_factor );
-	instruct1.add_part( continue_box, 0, -0.80 * (1080 / 2) * starting_scale_factor );
-	instruct1.add_part( continue_text, 0, -0.80 * (1080 / 2) * starting_scale_factor );
-
-	text page2_text = new text();
-	page2_text.set_caption( "You will need to look for the letter E and P (see examples above).\nThey can appear at either the smaller (local level) or larger (global) level.\n\nPress [Z] if the letter E is present.\nPress [/] if the letter P is present.", true );
-	continue_next.set_caption( "NEXT PAGE [/]", true );
-	continue_previous.set_caption( "[Z] PREVIOUS PAGE", true );
-	instruct2.add_part( bitmap_global_E, -300 * scale_factor, 200 * scale_factor );
-	instruct2.add_part( bitmap_global_P, -100 * scale_factor, 200 * scale_factor );
-	instruct2.add_part( bitmap_local_E, 100 * scale_factor, 200 * scale_factor );
-	instruct2.add_part( bitmap_local_P, 300 * scale_factor, 200 * scale_factor );
-	instruct2.add_part( page2_text, 0 * scale_factor, -100 * scale_factor );
-	instruct2.add_part( continue_box, 0, -0.80 * (1080 / 2) * starting_scale_factor );
-	instruct2.add_part( continue_break, 0, -0.80 * (1080 / 2) * starting_scale_factor );
-	instruct2.add_part( continue_next, (1920.0 / 4) * starting_scale_factor, -0.80 * (1080 / 2) * starting_scale_factor );
-	instruct2.add_part( continue_previous, (-1920.0 / 4) * starting_scale_factor, -0.80 * (1080 / 2) * starting_scale_factor );
-	
-	text page3_text = new text();
-	page3_text.set_caption( "Other letters will also appear (see examples above).\n\nDo not press anything if these appear.\nOnly respond if an E or P is present.", true );
-	continue_next.set_caption( "NEXT PAGE [/]", true );
-	continue_previous.set_caption( "[Z] PREVIOUS PAGE", true );
-	instruct3.add_part( bitmap_global_H, -500 * scale_factor, 200 * scale_factor );
-	instruct3.add_part( bitmap_global_U, -300 * scale_factor, 200 * scale_factor );
-	instruct3.add_part( bitmap_global_S, -100 * scale_factor, 200 * scale_factor );
-	instruct3.add_part( bitmap_local_H, 100 * scale_factor, 200 * scale_factor );
-	instruct3.add_part( bitmap_local_U, 300 * scale_factor, 200 * scale_factor );
-	instruct3.add_part( bitmap_local_S, 500 * scale_factor, 200 * scale_factor );
-	instruct3.add_part( page3_text, 0 * scale_factor, -100 * scale_factor );
-	instruct3.add_part( continue_box, 0, -0.80 * (1080 / 2) * starting_scale_factor );
-	instruct3.add_part( continue_break, 0, -0.80 * (1080 / 2) * starting_scale_factor );
-	instruct3.add_part( continue_next, (1920.0 / 4) * starting_scale_factor, -0.80 * (1080 / 2) * starting_scale_factor );
-	instruct3.add_part( continue_previous, (-1920.0 / 4) * starting_scale_factor, -0.80 * (1080 / 2) * starting_scale_factor );
-	
-	text page4_text = new text();
-	page4_text.set_caption( "Try to make your responses (when required) as quickly as possible.\n\nThere will be opportunities for short breaks though-out the task\n\nAre you read to start some practice trials?", true );
-	continue_begin.set_caption( "START PRACTICE [/]", true );
-	continue_previous.set_caption( "[Z] PREVIOUS PAGE", true );
-	instruct4.add_part( page4_text, 0 * scale_factor, 0 * scale_factor );
-	instruct4.add_part( continue_box, 0, -0.80 * (1080 / 2) * starting_scale_factor );
-	instruct4.add_part( continue_break, 0, -0.80 * (1080 / 2) * starting_scale_factor );
-	instruct4.add_part( continue_begin, (1920.0 / 4) * starting_scale_factor, -0.80 * (1080 / 2) * starting_scale_factor );
-	instruct4.add_part( continue_previous, (-1920.0 / 4) * starting_scale_factor, -0.80 * (1080 / 2) * starting_scale_factor );
-
-end;
-
 loop
-	int i = 1
+	int instruct_screen = 1;
 until
-	i > instruct_array.count()
+	instruct_screen > 4
 begin
-	instruct_event.set_stimulus( instruct_array[i] );
-	instruct_trial.present();
 	
-	int response_key = response_manager.last_response();
-	if response_key == 2 || response_key == 3 || response_key == 5 then
-		i = i + 1;
-	elseif response_key == 1 || response_key == 4 then
-		i = i - 1;
-		if i == 0 then i = 1 else end;
+	if instruct_screen == 1 then
+		create_new_prompt(1);
+		prompt_message.set_caption( "In this task, you will view various images of letters.\n You will need to respond to certain letters\n and ignore others.", true );
+		if parameter_manager.configuration_name() == "Mobile / Touchscreen" then
+			mid_button_text.set_caption( "Press here to continue", true );
+			prompt_trial.set_terminator_buttons ( { 3, 4, 5 } );
+		else
+			mid_button_text.set_caption( "Press [/] to continue", true );
+			prompt_trial.set_terminator_button ( 2 );
+		end;
+		
+	elseif instruct_screen == 2 then
+		create_new_prompt(2);
+		prompt_pic.add_part( bitmap_global_E, -300 * scale_factor, 300 * scale_factor );
+		prompt_pic.add_part( bitmap_global_P, -100 * scale_factor, 300 * scale_factor );
+		prompt_pic.add_part( bitmap_local_E, 100 * scale_factor, 300 * scale_factor );
+		prompt_pic.add_part( bitmap_local_P, 300 * scale_factor, 300 * scale_factor );
+		
+		if parameter_manager.configuration_name() == "Mobile / Touchscreen" then
+			prompt_message.set_caption( "You will need to look for the letter E and P (see examples above).\nThey can appear at either the smaller (local level) or larger (global) level.\n\nTap anywhere on the left-side of the screen if the letter E is present.\nTap anywhere on the right-side of the screen if the letter P is present.", true );
+			left_button_text.set_caption( "BACK", true );
+			right_button_text.set_caption( "NEXT", true );
+			prompt_trial.set_terminator_buttons ( { 4, 5 } );
+		else
+			prompt_message.set_caption( "You will need to look for the letter E and P (see examples above).\nThey can appear at either the smaller (local level) or larger (global) level.\n\nPress the [Z] key if the letter E is present.\nPress the [/] key if the letter P is present.", true );
+			left_button_text.set_caption( "BACK [Z]", true );
+			right_button_text.set_caption( "NEXT [/]", true );
+			prompt_trial.set_terminator_buttons (  { 1, 2 } );
+		end;
+
+	elseif instruct_screen == 3 then
+		create_new_prompt(2);
+		prompt_pic.add_part( bitmap_global_H, -500 * scale_factor, 300 * scale_factor );
+		prompt_pic.add_part( bitmap_global_U, -300 * scale_factor, 300 * scale_factor );
+		prompt_pic.add_part( bitmap_global_S, -100 * scale_factor, 300 * scale_factor );
+		prompt_pic.add_part( bitmap_local_H, 100 * scale_factor, 300 * scale_factor );
+		prompt_pic.add_part( bitmap_local_U, 300 * scale_factor, 300 * scale_factor );
+		prompt_pic.add_part( bitmap_local_S, 500 * scale_factor, 300 * scale_factor );
+		if parameter_manager.configuration_name() == "Mobile / Touchscreen" then
+			prompt_message.set_caption( "Other letters will also appear (see examples above).\n\nDo NOT tap anywhere if these appear.\nOnly respond if an E or P is present.", true );
+			left_button_text.set_caption( "BACK", true );
+			right_button_text.set_caption( "NEXT", true );
+			prompt_trial.set_terminator_buttons ( { 4, 5 } );
+		else
+			prompt_message.set_caption( "Other letters will also appear (see examples above).\n\nDo NOT press anything if these appear.\nOnly respond if an E or P is present.", true );
+			left_button_text.set_caption( "BACK [Z]", true );
+			right_button_text.set_caption( "NEXT [/]", true );
+			prompt_trial.set_terminator_buttons (  { 1, 2 } );
+		end;
+
+	elseif instruct_screen == 4 then
+		create_new_prompt(2);
+		if parameter_manager.get_string( "Practice Trials", "YES" ) == "YES" then
+			prompt_message.set_caption( "Try to make your responses (when required) as quickly as possible.\n\nThere will be opportunities for short breaks though-out the task\n\nAre you read to start some practice trials?", true );
+		else
+			prompt_message.set_caption( "Try to make your responses (when required) as quickly as possible.\n\nThere will be opportunities for short breaks though-out the task\n\nAre you read to begin?", true );
+		end;
+		
+		if parameter_manager.configuration_name() == "Mobile / Touchscreen" then
+			left_button_text.set_caption( "BACK", true );
+			right_button_text.set_caption( "READY!", true );
+			prompt_trial.set_terminator_buttons ( { 4, 5 } );
+		else
+			left_button_text.set_caption( "BACK [Z]", true );
+			right_button_text.set_caption( "READY! [/]", true );
+			prompt_trial.set_terminator_buttons (  { 1, 2 } );
+		end;
+
 	end;
+
+	prompt_trial.present();
+
+	int response_key = response_manager.last_response();
 	
+	if instruct_screen == 1 && ( response_key == 3 || response_key == 4 || response_key == 5 ) then
+		instruct_screen = instruct_screen + 1
+	elseif response_key == 2 || response_key == 5 then
+		instruct_screen = instruct_screen + 1;
+	elseif response_key == 1 || response_key == 4 then
+		instruct_screen = instruct_screen - 1;
+		if instruct_screen == 0 then instruct_screen = 1 else end;
+		
+	else
+	end;
+
 end;
+
 
 ###   Define logfile parameters and initialize
 
 string participant;
+int logfile_inc = 1;
+
 if logfile.subject() == "" then
 	participant = "NULL 999"
 else
 	participant = logfile.subject();
 end;
 
-string local_save = parameter_manager.get_string( "Use Local Save", "NO" );
-string local_path = "C:/Presentation Output/";
-string filename = "Participant " +  participant + " - SLP.txt";
-
+string local_path; 
+string filename;
+string use_local_save;
 output_file log = new output_file;
 
-if local_save == "YES" then
-	create_directory( local_path );
-	if !log.open( local_path + filename, log.APPEND, false ) then
-		 log.open( filename )
+loop
+	bool log_success
+until
+	log_success == true
+begin
+
+	use_local_save = parameter_manager.get_string( "Use Local Save", "NO" );
+	local_path = "C:/Presentation Output/SLP Hierarchical Figures/";
+	filename = "SLP - Participant " +  participant + "_" + string( logfile_inc ) + ".txt";
+
+	if use_local_save == "YES" then
+		create_directory( local_path );
+		if file_exists( local_path + filename ) then
+			# do nothing
+		else
+			log.open( local_path + filename );
+			break
+		end;
+
+	else
+		if file_exists( logfile_directory + filename ) then
+			# do nothing
+		else
+			log.open( filename );
+			break
+		end;
 	end;
-else
-	if !log.open(  local_path + filename, log.APPEND, false ) then
-		 log.open( filename )
-	end;
+	
+	logfile_inc = logfile_inc + 1;
 
 end;
 
@@ -534,7 +492,8 @@ begin
 			end;
 
 		end;
-		
+
+		response_manager.set_button_active( 3, false );
 		main_trial.present();
 		
 		stimulus_data last_stimulus = stimulus_manager.last_stimulus_data();
@@ -575,58 +534,61 @@ begin
 		array <string> chara[5] = {"E", "P", "H", "U", "S"};
 
 		# Logfile Output
-		log.print( block ); log.print("\t");
-		log.print( i ); log.print("\t");
-		log.print( type[stimulus_set[i][1]] ); log.print("\t");
-		log.print( level[stimulus_set[i][2]] ); log.print("\t");
-		log.print( chara[stimulus_set[i][3]] ); log.print("\t");
-		log.print( response_key ); log.print("\t");
-		log.print( response_time ); log.print("\t");
-		log.print( is_correct ); log.print("\n");
+		if parameter_manager.get_string( "Log Practice Trials", "YES" ) == "YES" then
+			log.print( block ); log.print("\t");
+			log.print( i ); log.print("\t");
+			log.print( type[stimulus_set[i][1]] ); log.print("\t");
+			log.print( level[stimulus_set[i][2]] ); log.print("\t");
+			log.print( chara[stimulus_set[i][3]] ); log.print("\t");
+			log.print( response_key ); log.print("\t");
+			log.print( response_time ); log.print("\t");
+			log.print( is_correct ); log.print("\n");
+		else
+		end;
 		
 		i = i + 1;
+
 	end;
 
+	response_manager.set_button_active( 3, true );
+
 	if block == 0 then
-		block_message.set_caption( "Practice Over!\n\nAre you ready to begin the main trials,\nor do you want to complete another practice block?", true );
-		block_pic.clear();
-		block_pic.add_part( block_message, 0, 0 );
-		if parameter_manager.configuration_name() == "Mobile / Touchscreen" then
-			continue_previous.set_caption( "Practice more...", true );
-			continue_begin.set_caption( "Ready!", true );
-		else
-			continue_previous.set_caption( "Practice more... [Z]", true );
-			continue_begin.set_caption( "Ready! [/]", true );
-		end;
-		block_pic.add_part( continue_box, 0, -0.80 * (1080 / 2) * starting_scale_factor );
-		block_pic.add_part( continue_break, 0, -0.80 * (1080 / 2) * starting_scale_factor );
-		block_pic.add_part( continue_begin, (1920.0 / 4) * starting_scale_factor, -0.80 * (1080 / 2) * starting_scale_factor );
-		block_pic.add_part( continue_previous, (-1920.0 / 4) * starting_scale_factor, -0.80 * (1080 / 2) * starting_scale_factor );
 		
-		end_block_trial.set_terminator_buttons( { 1, 2, 4, 5 } );
-		end_block_trial.present();
+		create_new_prompt( 2 );
+		prompt_message.set_caption( "Practice Over!\n\nAre you ready to begin the main trials,\nor do you want to complete another practice block?", true );
+		if parameter_manager.configuration_name() == "Mobile / Touchscreen" then
+			left_button_text.set_caption( "Practice more...", true );
+			right_button_text.set_caption( "Ready!", true );
+			prompt_trial.set_terminator_buttons( { 4, 5 } );
+		else
+			left_button_text.set_caption( "Practice more... [Z]", true );
+			right_button_text.set_caption( "Ready! [/]", true );
+			prompt_trial.set_terminator_buttons( { 1, 2 } );
+		end;
+	
+		prompt_trial.present();
+		
 		if response_manager.last_response() == 1 || response_manager.last_response() == 4 then
 			# go to start of loop without increasing block counter to 1 (keep at 0)
 			continue;
 		elseif response_manager.last_response() == 2 || response_manager.last_response() == 5 then
 			# disable practice flag
 			is_practice_on = "OFF";
-			end_block_trial.set_terminator_button( 3 );
 		end;
 		
 	elseif block != max_blocks then
+		create_new_prompt( 1 );
+		prompt_message.set_caption( "End of block!\n\nContinue when you are ready", true );
 		# not the last block
-		block_message.set_caption( "End of block!\n\nContinue when you are ready", true );
 		if parameter_manager.configuration_name() == "Mobile / Touchscreen" then
-			continue_text.set_caption( "NEXT BLOCK", true );
+			mid_button_text.set_caption( "NEXT BLOCK", true );
+			prompt_trial.set_terminator_buttons( { 3, 4, 5 } );
 		else
-			continue_text.set_caption( "NEXT BLOCK [SPACEBAR]", true );
+			mid_button_text.set_caption( "NEXT BLOCK [SPACEBAR]", true );
+			prompt_trial.set_terminator_button( 3 );
 		end;
-		block_pic.clear();
-		block_pic.add_part( block_message, 0, 0 );
-		block_pic.add_part( continue_box, 0, -0.80 * (1080 / 2) * starting_scale_factor );
-		block_pic.add_part( continue_text, 0, -0.80 * (1080 / 2) * starting_scale_factor );
-		end_block_trial.present()
+
+		prompt_trial.present()
 	else
 		# skip "End of Block" message
 	end;
@@ -651,19 +613,21 @@ log.close();
 #	[3] if save operation is to be performed ("YES"/"NO") 
 
 include "sub_force_local_save.pcl";
-sub_save_to_network( local_path, filename, local_save );	
+sub_save_to_network( local_path, filename, use_local_save );	
 
 #########################################################
 
+create_new_prompt( 1 );
 
-block_message.set_caption( "End of experiment!\n\nThank you!\n\nPlease notify the experimenter.", true );
+prompt_message.set_caption( "End of experiment!\n\nThank you!\n\nPlease notify the experimenter.", true );
+
 if parameter_manager.configuration_name() == "Mobile / Touchscreen" then
-	continue_text.set_caption( "CLOSE PROGRAM", true );
+	mid_button_text.set_caption( "CLOSE PROGRAM", true );
+	prompt_trial.set_terminator_buttons( { 3, 4, 5 } );
 else
-	continue_text.set_caption( "CLOSE PROGRAM [SPACEBAR]", true );
+	mid_button_text.set_caption( "CLOSE PROGRAM [SPACEBAR]", true );
+	prompt_trial.set_terminator_button( 3 );
 end;
-block_pic.clear();
-block_pic.add_part( block_message, 0, 0 );
-block_pic.add_part( continue_box, 0, -0.80 * (1080 / 2) * starting_scale_factor );
-block_pic.add_part( continue_text, 0, -0.80 * (1080 / 2) * starting_scale_factor );
-end_block_trial.present();
+
+prompt_trial.present();
+
