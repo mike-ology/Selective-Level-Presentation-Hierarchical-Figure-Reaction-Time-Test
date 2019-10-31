@@ -157,32 +157,32 @@ local_8.set_line_color( 128, 128, 128, 255 );
 local_E.add_line( -1 * xs, 2 * ys, 1 * xs, 2 * ys );
 local_E.add_line( -1 * xs, 0 * ys, 1 * xs, 0 * ys );
 local_E.add_line( -1 * xs, -2 * ys, 1 * xs, -2 * ys );
-local_E.add_line( -1 * xs, 2 * ys, -1 * xs, -2 * ys );
+local_E.add_line( -1 * xs, 2 * ys, -1 * xs, -2 * ys - (lw/2) );
 
 local_P.add_line( -1 * xs, 2 * ys, 1 * xs, 2 * ys );
 local_P.add_line( -1 * xs, 0 * ys, 1 * xs, 0 * ys );
 local_P.add_line( -1 * xs, 2 * ys, -1 * xs, -2 * ys );
-local_P.add_line( 1 * xs, 2 * ys, 1 * xs, 0 * ys );
+local_P.add_line( 1 * xs, 2 * ys, 1 * xs, 0 * ys - (lw/2) );
 
 local_H.add_line( -1 * xs, 0 * ys, 1 * xs, 0 * ys );
 local_H.add_line( -1 * xs, 2 * ys, -1 * xs, -2 * ys );
-local_H.add_line( 1 * xs, 2 * ys, 1 * xs, -2 * ys );
+local_H.add_line( 1 * xs, 2 * ys, 1 * xs, -2 * ys - (lw/2) );
 
 local_U.add_line( -1 * xs, -2 * ys, 1 * xs, -2 * ys );
 local_U.add_line( -1 * xs, 2 * ys, -1 * xs, -2 * ys );
-local_U.add_line( 1 * xs, 2 * ys, 1 * xs, -2 * ys );
+local_U.add_line( 1 * xs, 2 * ys, 1 * xs, -2 * ys - (lw/2) );
 
 local_S.add_line( -1 * xs, 2 * ys, 1 * xs, 2 * ys );
 local_S.add_line( -1 * xs, 0 * ys, 1 * xs, 0 * ys );
 local_S.add_line( -1 * xs, -2 * ys, 1 * xs, -2 * ys );
 local_S.add_line( -1 * xs, 2 * ys, -1 * xs, 0 * ys );
-local_S.add_line( 1 * xs, 0 * ys, 1 * xs, -2 * ys );
+local_S.add_line( 1 * xs, 0 * ys, 1 * xs, -2 * ys - (lw/2) );
 
 local_8.add_line( -1 * xs, 2 * ys, 1 * xs, 2 * ys );
 local_8.add_line( -1 * xs, 0 * ys, 1 * xs, 0 * ys );
 local_8.add_line( -1 * xs, -2 * ys, 1 * xs, -2 * ys );
 local_8.add_line( -1 * xs, 2 * ys, -1 * xs, -2 * ys );
-local_8.add_line( 1 * xs, 2 * ys, 1 * xs, -2 * ys );
+local_8.add_line( 1 * xs, 2 * ys, 1 * xs, -2 * ys - (lw/2) );
 
 local_E.redraw();
 local_P.redraw();
@@ -606,7 +606,7 @@ log.print ( string( time ) + " minutes" );
 
 log.print( "\n" );
 log.print( "\n" );
-log.print( "===== TASK COMPLETE =====" );
+log.print( "===== TASK COMPLETE - END OF FILE =====" );
 log.close();
 
 #########################################################
@@ -636,7 +636,7 @@ if parameter_manager.configuration_name() == "Mobile / Touchscreen" then
 	prompt_trial.set_terminator_buttons( { 3, 4, 5 } );
 else
 	mid_button_text.set_caption( "CLOSE PROGRAM [SPACEBAR]", true );
-	prompt_trial.set_terminator_button( 3 );
+	prompt_trial.set_terminator_button( 1 );
 end;
 
 prompt_trial.present();
