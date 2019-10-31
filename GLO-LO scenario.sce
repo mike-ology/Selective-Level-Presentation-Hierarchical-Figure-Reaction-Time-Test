@@ -20,17 +20,17 @@ begin;
 $exposure_duration = EXPARAM( "Trial Duration" : 1000 ); 
 
 array { 
-	bitmap { filename = "example_global_E.jpg"; preload = false; } bitmap_global_E;
-	bitmap { filename = "example_global_P.jpg"; preload = false; } bitmap_global_P;
-	bitmap { filename = "example_global_H.jpg"; preload = false; } bitmap_global_H;
-	bitmap { filename = "example_global_U.jpg"; preload = false; } bitmap_global_U;
-	bitmap { filename = "example_global_S.jpg"; preload = false; } bitmap_global_S;
+	bitmap { filename = "example_global_E.png"; preload = false; } bitmap_global_E;
+	bitmap { filename = "example_global_P.png"; preload = false; } bitmap_global_P;
+	bitmap { filename = "example_global_H.png"; preload = false; } bitmap_global_H;
+	bitmap { filename = "example_global_U.png"; preload = false; } bitmap_global_U;
+	bitmap { filename = "example_global_S.png"; preload = false; } bitmap_global_S;
 
-	bitmap { filename = "example_local_E.jpg"; preload = false; } bitmap_local_E;
-	bitmap { filename = "example_local_P.jpg"; preload = false; } bitmap_local_P;
-	bitmap { filename = "example_local_H.jpg"; preload = false; } bitmap_local_H;
-	bitmap { filename = "example_local_U.jpg"; preload = false; } bitmap_local_U;
-	bitmap { filename = "example_local_S.jpg"; preload = false; } bitmap_local_S;
+	bitmap { filename = "example_local_E.png"; preload = false; } bitmap_local_E;
+	bitmap { filename = "example_local_P.png"; preload = false; } bitmap_local_P;
+	bitmap { filename = "example_local_H.png"; preload = false; } bitmap_local_H;
+	bitmap { filename = "example_local_U.png"; preload = false; } bitmap_local_U;
+	bitmap { filename = "example_local_S.png"; preload = false; } bitmap_local_S;
 } bitmap_examples;
 
 trial {
@@ -161,18 +161,18 @@ local_E.add_line( -1 * xs, 2 * ys, -1 * xs, -2 * ys - (lw/2) );
 
 local_P.add_line( -1 * xs, 2 * ys, 1 * xs, 2 * ys );
 local_P.add_line( -1 * xs, 0 * ys, 1 * xs, 0 * ys );
-local_P.add_line( -1 * xs, 2 * ys, -1 * xs, -2 * ys );
+local_P.add_line( -1 * xs, 2 * ys, -1 * xs, -2 * ys - (lw/2) );
 local_P.add_line( 1 * xs, 2 * ys, 1 * xs, 0 * ys - (lw/2) );
 
 local_H.add_line( -1 * xs, 0 * ys, 1 * xs, 0 * ys );
-local_H.add_line( -1 * xs, 2 * ys, -1 * xs, -2 * ys );
+local_H.add_line( -1 * xs, 2 * ys, -1 * xs, -2 * ys - (lw/2) );
 local_H.add_line( 1 * xs, 2 * ys, 1 * xs, -2 * ys - (lw/2) );
 
 local_U.add_line( -1 * xs, -2 * ys, 1 * xs, -2 * ys );
 local_U.add_line( -1 * xs, 2 * ys, -1 * xs, -2 * ys );
 local_U.add_line( 1 * xs, 2 * ys, 1 * xs, -2 * ys - (lw/2) );
 
-local_S.add_line( -1 * xs, 2 * ys, 1 * xs, 2 * ys );
+local_S.add_line( -1 * xs, 2 * ys, 1 * xs + (lw/2), 2 * ys );
 local_S.add_line( -1 * xs, 0 * ys, 1 * xs, 0 * ys );
 local_S.add_line( -1 * xs, -2 * ys, 1 * xs, -2 * ys );
 local_S.add_line( -1 * xs, 2 * ys, -1 * xs, 0 * ys );
@@ -211,6 +211,7 @@ instruct_array.add( instruct1 );
 instruct_array.add( instruct2 );
 instruct_array.add( instruct3 );
 instruct_array.add( instruct4 );
+
 
 loop
 	int instruct_screen = 1;
